@@ -1,0 +1,36 @@
+{% extends 'navigation\navigation.html' %}
+{% load crispy_forms_tags %}
+
+{% load static %}
+{% block content %}
+<head>
+    <!-- Css -->
+    <link rel="stylesheet" href="{% static 'authentication/css/auth.css' %}" type="text/css">
+</head>
+
+<body>
+    <div class="container" id="auth_form">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="py-4 px-5" id="auth_form_side">
+                <h2 class="card-title text-center">Join Us Now!</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+
+                    <div class="form-group d-flex justify-content-between" id="signup_bot">
+                        <div>
+                            <p>Already have an account? <a href="/">Log in</a></p>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary" id="sub">Sign Up</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+{% endblock %}
