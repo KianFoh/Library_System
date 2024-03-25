@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from .forms import SignupForm
-from verify_email.email_handler import send_verification_email
 
 def signup_view(request):
     if request.method == 'POST':
