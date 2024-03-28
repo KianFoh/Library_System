@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.contrib import messages
-from .forms import SignupForm
+from .forms import SignupForm, LoginForm
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
@@ -9,6 +9,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
 from .token import account_activation_token
+from django.contrib.auth.models import User
 
 
 def activate(request,uidb64, token):
@@ -51,7 +52,35 @@ def signup_view(request):
             user.is_active = False
             user.save()
             activateEmail(request, user, form.cleaned_data.get('email'))
-            return redirect('/')
+            return redirect('/login')
     else:
         form = SignupForm()
     return render(request, 'authentication/signup.html', {'form': form})
+
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username_or_email = form.cleaned_data['username_or_email']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username_or_email, password=password)
+
+            if user is None:
+                try:
+                    user = User.objects.get(email=username_or_email)
+                    user = authenticate(username=user.username, password=password)
+                except User.DoesNotExist:
+                    pass
+            if user:
+                login(request, user)
+                message_content = f'Welcome to Vision Library, {user.username}!'
+                messages.success(request, message_content)
+                return redirect('home')
+    else:
+        form = LoginForm()
+
+    return render(request, 'authentication/login.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
