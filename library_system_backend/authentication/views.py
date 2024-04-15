@@ -45,6 +45,8 @@ def activateEmail(request, user, to_email):
         message.error(request, f'Problem sending email to {to_email}, Please check if you typed it correctly.')
 
 def signup_view(request):
+    if request.user.is_authenticated:
+        return redirect('home')
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
@@ -58,6 +60,8 @@ def signup_view(request):
     return render(request, 'authentication/signup.html', {'form': form})
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('home')
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
