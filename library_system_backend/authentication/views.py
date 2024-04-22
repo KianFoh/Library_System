@@ -10,6 +10,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
 from .token import account_activation_token
 from django.contrib.auth.models import User
+from user_data.models import user_data
 
 
 def activate(request,uidb64, token):
@@ -53,6 +54,7 @@ def signup_view(request):
             user = form.save(commit=False)
             user.is_active = False
             user.save()
+            user_data.objects.create(user=user)
             activateEmail(request, user, form.cleaned_data.get('email'))
             return redirect('/login')
     else:

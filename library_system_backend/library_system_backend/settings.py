@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     # Own
     'navigation.apps.NavigationConfig',
     'home.apps.HomeConfig',
-    'books.apps.BooksConfig',
     'rooms.apps.RoomsConfig',
     'bookings.apps.BookingsConfig',
     'about.apps.AboutConfig',
@@ -50,6 +49,7 @@ INSTALLED_APPS = [
     'footer.apps.FooterConfig',
     'authentication.apps.AuthenticationConfig',
     'profile_.apps.ProfileConfig',
+    'user_data.apps.UserDataConfig',
     'crispy_forms',
     'crispy_bootstrap4',
 ]
