@@ -10,7 +10,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
 from .token import account_activation_token  # Importing custom token for account activation
 from django.contrib.auth.models import User
-from user_data.models import user_data  # Importing the user_data model from the user_data app
+from user_data.models import User_data  # Importing the user_data model from the user_data app
 
 
 def activate(request, uidb64, token):
@@ -68,7 +68,7 @@ def signup_view(request):
             user.save()
 
             # Create a corresponding user_data object
-            user_data.objects.create(user=user)
+            User_data.objects.create(user=user)
 
             # Send activation email
             activateEmail(request, user, form.cleaned_data.get('email'))
