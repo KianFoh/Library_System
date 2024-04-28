@@ -1,4 +1,4 @@
-from django.db.models.signals import post_delete, post_save
+from django.db.models.signals import post_delete, post_save, pre_save
 from django.dispatch import receiver
 from .models import Room
 from bookings.models import Timeslot
@@ -26,3 +26,13 @@ def room_add_timeslot(sender, instance, created, **kwargs):
             start_time += timedelta(hours=1)  # Increment start time by 1 hour
             end_time += timedelta(hours=1)    # Increment end time by 1 hour
             Timeslot.objects.create(room_id=room_id, start_time=start_time, end_time=end_time)
+
+@receiver(pre_save, sender=Room)
+def delete_previous_image(sender, instance, **kwargs):
+    if instance.pk:  # If instance already exists (i.e., it's being updated)
+        try:
+            old_instance = Room.objects.get(pk=instance.pk)
+            if old_instance.image != instance.image:  # If image has changed
+                delete_file_on_post_delete(sender, old_instance, 'image')
+        except Room.DoesNotExist:
+            pass
