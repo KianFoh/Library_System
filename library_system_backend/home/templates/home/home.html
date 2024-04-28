@@ -1,6 +1,39 @@
 {% extends 'navigation\navigation.html' %}
 {% load static %}
-{% block content %}
-<h1>Home</h1>
 
+{% block title %}
+<title>Home</title>
+{% endblock title %}
+
+{% block content %}
+<body>
+    <h1>Announcements</h1>
+    <h2>Most Recent Notice</h2>
+    {% if annoucements %}
+        <a class="most-recent-announcement_link" href="{% url 'announcement' annoucements.0.id %}">
+            <div class="most-recent-announcement">
+                <p>{{ annoucements.0.title }} {{ annoucements.0.datetime }}</p>
+                
+                    <img src="{{ annoucements.0.image.url }}">
+                
+            </div>
+        </a>
+    {% else %}
+        <p>No Announcements</p>
+    {% endif %}
+    
+    <h1>More Announcements</h1>
+    <div class="list-annoucements">
+        {% for annoucement in annoucements %}
+            {% if forloop.counter > 1 %}
+                <a class="most-recent-announcement_link" href="{% url 'announcement' annoucement.id %}">
+                    <div class ="annoucement">
+                        <p>{{ annoucement.title }} {{ annoucement.datetime }}</p>
+                        <img src="{{ annoucement.image.url }}">
+                    </div>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+</body>
 {% endblock %}
