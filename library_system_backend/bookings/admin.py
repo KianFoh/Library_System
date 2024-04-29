@@ -22,6 +22,8 @@ class TimeslotAdmin(admin.ModelAdmin):
     formatted_end_time.admin_order_field = 'end_time'
 
     # Set column header 
+    formatted_start_time.short_description = 'Start Time'
+    formatted_end_time.short_description = 'End Time'
     timeslot_id.short_description = 'Time Slot ID'
 
 admin.site.register(Timeslot, TimeslotAdmin)
