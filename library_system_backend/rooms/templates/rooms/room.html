@@ -1,5 +1,6 @@
 {% extends 'navigation\navigation.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block title %}
 <title>Room:{{ Room.name }}</title>
@@ -15,5 +16,11 @@
         <p>Start Time : {{timeslot.start_time|date:"g:iA"}} End Time: {{timeslot.end_time|date:"g:iA"}} Status: {{timeslot.status}}</p>
     
     {% endfor %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+
 </body>
 {% endblock %}
