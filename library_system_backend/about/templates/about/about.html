@@ -4,4 +4,98 @@
 <h1>About</h1>
 
 
+<div class="container">
+    <!-- Supervisor 标题 -->
+    <h2 class="text-center mb-4">Supervisor</h2>
+
+    <div class="row text-center">
+        <div class="col">
+            <div class="content">
+                <img src="{% static 'about/image/AI.jpg' %}" alt="ai image" class="img-fluid" width="400">
+                <div class="caption">
+                    <h2>Dr. Jane Smith</h2>
+                    <p>Lead Researcher</p>
+                    <!-- 折叠按钮 -->
+                    <button class="btn btn-primary btn-sm mt-3" data-bs-toggle="collapse" data-bs-target="#supervisorInfo" aria-expanded="false" aria-controls="supervisorInfo">More Info</button>
+                    <!-- 折叠内容 -->
+                    <div id="supervisorInfo" class="collapse mt-3">
+                        <p>Dr. Jane Smith is an accomplished lead researcher with expertise in artificial intelligence and machine learning. She has published numerous papers and leads a dynamic research team.</p>
+                        <p>Contact Dr. Smith: jane@example.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+    <h2 class="text-center mb-4">Student</h2>
+    <div class="row text-center">
+        <!-- 第一张图片和更多资料 -->
+        <div class="col">
+            <div class="content">
+                <img src="{% static 'about/image/AI.jpg' %}" alt="ai image" class="img-fluid" width="400">
+                <div class="caption">
+                    <h2>John Doe</h2>
+                    <p>UI/UX Designer + Graphic Designer</p>
+                    <!-- 折叠按钮 -->
+                    <button class="btn btn-info btn-sm mt-3" data-bs-toggle="collapse" data-bs-target="#moreInfo1" aria-expanded="false" aria-controls="moreInfo1">More Info</button>
+                    <!-- 折叠内容 -->
+                    <div id="moreInfo1" class="collapse mt-3">
+                        <p>John Doe is a talented UI/UX designer with a passion for creating engaging user experiences. He has a strong background in graphic design and loves to combine creativity with technology.</p>
+                        <p>Contact John: john@example.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第二张图片和更多资料 -->
+        <div class="col">
+            <div class="content">
+                <img src="{% static 'about/image/AI.jpg' %}" alt="ai image" class="img-fluid" width="400">
+                <div class="caption">
+                    <h2>Prince Akashi</h2>
+                    <p>Photographer + Model</p>
+                    <!-- 折叠按钮 -->
+                    <button class="btn btn-info btn-sm mt-3" data-bs-toggle="collapse" data-bs-target="#moreInfo2" aria-expanded="false" aria-controls="moreInfo2">More Info</button>
+                    <!-- 折叠内容 -->
+                    <div id="moreInfo2" class="collapse mt-3">
+                        <p>Prince Akashi is a talented photographer known for capturing stunning moments. He is also an experienced model and brings a unique perspective to his work.</p>
+                        <p>Contact Prince: prince@example.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第三张图片和更多资料 -->
+        <div class="col">
+            <div class="content">
+                <img src="{% static 'about/image/AI.jpg' %}" alt="ai image" class="img-fluid" width="400">
+                <div class="caption">
+                    <h2>Rafaella Mendes</h2>
+                    <p>Fashion Designer + Model</p>
+                    <!-- 折叠按钮 -->
+                    <button class="btn btn-info btn-sm mt-3" data-bs-toggle="collapse" data-bs-target="#moreInfo3" aria-expanded="false" aria-controls="moreInfo3">More Info</button>
+                    <!-- 折叠内容 -->
+                    <div id="moreInfo3" class="collapse mt-3">
+                        <p>Rafaella Mendes is a talented fashion designer with a passion for creating stylish and innovative designs. She also works as a professional model and advocates for sustainable fashion.</p>
+                        <p>Contact Rafaella: rafaella@example.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- 引入 Bootstrap 的 JavaScript 文件（包含折叠组件等） -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
 {% endblock %}
