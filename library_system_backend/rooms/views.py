@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from .models import Room 
 from bookings.models import Timeslot 
 from datetime import datetime
-from .form import RoomForm
+from .forms import RoomForm
 
 def rooms(request):
     rooms_data = Room.objects.order_by('id')
@@ -32,8 +32,6 @@ def room(request, room_id):
         timeslot_display = f"{timeslot.start_time.strftime('%H:%M')} - {timeslot.end_time.strftime('%H:%M')}"
         if timeslot.status == 'Empty':
             timeslot_choices.append((timeslot.id, timeslot_display))
-        else:
-            timeslot_choices.append((timeslot.id, f"{timeslot_display} (Unavailable)"))
 
     form = RoomForm()
     form.fields['timeslots'].choices = timeslot_choices

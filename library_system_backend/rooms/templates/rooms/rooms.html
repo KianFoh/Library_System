@@ -11,36 +11,21 @@
     {# Check if got rooms #}
     {% if rooms %}
 
-        <h2>Currently Available</h2>
-        {# Iterate through rooms #}
-        {% for room in rooms %} 
-            {# Check for rooms that are currently available #}
-            {% if room.id in available_rooms %}
-            <a class="available_rooms_link" href="{% url 'room' room.id %}">
-                <h2>{{room.name}}</h2>
-                <img src="{{ room.image.url }}">
-                <p>Min Pax :{{room.min_pax}} Max Pax:{{room.max_pax}}</p>
-            </a>
-
-            {# If no room are currently available display message #}
-            {% else %}
-                <p>No Room</p>
-            {% endif %}
-        {% endfor %}
-
-        <h2>Currently Unavailable</h2>
         {# Iterate through rooms #}
         {% for room in rooms %}
             {# Check for rooms that are currently unavailable #}
-            {% if room.id not in available_rooms %}
+            {% if room.id in available_rooms %}
             <a class="unavailable_rooms_link" href="{% url 'room' room.id %}">
-                <h2>{{room.name}}</h2>
+                <h2>{{room.name}} : Currently Available</h2>
                 <img src="{{ room.image.url }}">
                 <p>Min Pax :{{room.min_pax}} Max Pax:{{room.max_pax}}</p>
             </a>
-            {# If no room are currently unavailable display message #}
             {% else %}
-                <p>No Room</p>
+            <a class="unavailable_rooms_link" href="{% url 'room' room.id %}">
+                <h2>{{room.name}} : Currently Unavailable</h2>
+                <img src="{{ room.image.url }}">
+                <p>Min Pax :{{room.min_pax}} Max Pax:{{room.max_pax}}</p>
+            </a>
             {% endif %}
         {% endfor %}
     
