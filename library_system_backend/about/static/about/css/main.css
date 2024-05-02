@@ -1,4 +1,6 @@
 /* styles.css */
+
+
 @keyframes slideIn {
     0% {
         transform: translateX(-100%);
@@ -72,3 +74,29 @@
     border: 1px solid #ddd;
     border-radius: 5px;
 }
+
+/* 图像放大效果 */
+.img-fluid:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+/* 标题/解释部分的背景和边框效果 */
+.text-left:hover {
+    background-color: #f8f9fa; /* 添加悬停时的背景色 */
+    border: 1px solid #ced4da; /* 添加悬停时的边框 */
+    padding: 20px; /* 添加悬停时的内边距 */
+    transition: all 0.3s ease;
+}
+
+/* 图像和文本部分的过渡效果 */
+.col-md-6 {
+    transition: transform 0.3s ease;
+}
+
+/* 图像悬停时的位移效果 */
+.col-md-6:hover {
+    transform: translateX(-10px); /* 图像向左移动 10px */
+}
+
+
