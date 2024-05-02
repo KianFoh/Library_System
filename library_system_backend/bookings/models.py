@@ -11,9 +11,9 @@ class Timeslot(models.Model):
     ]
 
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
-    status = models.CharField(max_length=20, choices=TIMESLOT_STATUS_CHOICES)
+    start_time = models.DateTimeField(null=False)
+    end_time = models.DateTimeField(null=False)
+    status = models.CharField(max_length=20, choices=TIMESLOT_STATUS_CHOICES, default='Empty', null=False)
 
 def __str__(self):
         return f"Timeslot for {self.room} from {self.start_time} to {self.end_time} ({self.status})"
@@ -28,7 +28,7 @@ class Booking(models.Model):
     time_slot = models.ForeignKey(Timeslot, on_delete=models.CASCADE)
     users = models.ManyToManyField(User)
     date_time = models.DateTimeField()
-    status = models.CharField(max_length=20, choices=BOOKING_STATUS_CHOICES)
+    status = models.CharField(max_length=20, choices=BOOKING_STATUS_CHOICES, default='Pending')
 
 def __str__(self):
         return f"Booking for {self.time_slot.room} from {self.time_slot.start_time} to {self.time_slot.end_time} ({self.status})"

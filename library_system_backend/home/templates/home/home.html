@@ -1,5 +1,6 @@
 {% extends 'navigation\navigation.html' %}
 {% load static %}
+<<<<<<< HEAD
 {% block content %}
 <style>
     .blue-box {
@@ -21,5 +22,58 @@
         picture
     </p>
 </div>
+=======
+>>>>>>> master
 
+{% block title %}
+<title>Home</title>
+{% endblock title %}
+
+{% block content %}
+<body>
+    <h1>Announcements</h1>
+    
+    {# Check if got annoucements #}
+    {% if annoucements %} 
+        <h2>Most Recent Notice</h2>
+        <a class="most-recent-announcement_link" href="{% url 'announcement' annoucements.0.id %}">
+            <div class="most-recent-announcement">
+                {# Display the latest annoucement #}
+                <p>{{ annoucements.0.title }} {{ annoucements.0.datetime }}</p>
+                
+                    <img src="{{ annoucements.0.image.url }}">
+                
+            </div>
+        </a>
+
+        {# Check if there is more than one annoucement #}
+        {% if annoucements.1 %}
+            <h2>More Announcements</h2>
+            <div class="list-annoucements">
+                {# Iterate through annoucement #}
+                {% for annoucement in annoucements %}
+                    {# Exclude displaying latest announcement #}
+                    {% if forloop.counter > 1 %}
+                        <a class="most-recent-announcement_link" href="{% url 'announcement' annoucement.id %}">
+                            <div class ="annoucement">
+                                <p>{{ annoucement.title }} {{ annoucement.datetime }}</p>
+                                <img src="{{ annoucement.image.url }}">
+                            </div>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        
+        {# If there is only one annoucement display message#}
+        {% else %}
+            <p>No annoucement</p>
+        {% endif %}
+
+    {# If there is no annoucement display message#}
+    {% else %}
+        <p>No Announcement</p>
+    {% endif %}
+    
+
+</body>
 {% endblock %}

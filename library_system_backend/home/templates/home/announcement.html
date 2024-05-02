@@ -1,0 +1,15 @@
+{% extends 'navigation\navigation.html' %}
+{% load static %}
+
+{% block title %}
+<title>Annoucement:{{ announcement.title }}</title>
+{% endblock title %}
+
+{% block content %}
+<body>
+    <h1>{{ announcement.title }}</h1>
+    <p>{{ announcement.datetime }}</p>
+    <img src="{{ announcement.image.url }}">
+    <p>{{ announcement.description }}</p>
+</body>
+{% endblock %}

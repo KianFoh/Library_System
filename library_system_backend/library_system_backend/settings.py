@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os 
+import pytz
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     'user_data.apps.UserDataConfig',
     'crispy_forms',
     'crispy_bootstrap4',
+    'pytz',
 ]
 
 MIDDLEWARE = [
@@ -124,12 +126,17 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# Set the timezone to Malaysia time
+TIME_ZONE = 'Asia/Kuala_Lumpur'
 
+
+
+# Enable timezone support
+USE_TZ = False
 USE_I18N = True
 
-USE_TZ = True
-
+# Set the date format to DD/MM/YYYY
+DATE_FORMAT = 'd/m/Y'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -156,3 +163,7 @@ EMAIL_HOST_USER = 'monokumabestgirl@gmail.com'
 EMAIL_HOST_PASSWORD = 'wdfg axhx umsj lccp'
 
 PASSWORD_RESET_TIMEOUT = 14400
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+

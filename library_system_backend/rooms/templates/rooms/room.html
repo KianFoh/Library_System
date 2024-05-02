@@ -1,0 +1,19 @@
+{% extends 'navigation\navigation.html' %}
+{% load static %}
+
+{% block title %}
+<title>Room:{{ Room.name }}</title>
+{% endblock title %}
+
+{% block content %}
+<body>
+    <h1>{{ room.name }}</h1>
+    <p>Min Pax :{{room.min_pax}} Max Pax:{{room.max_pax}}</p>
+    <img src="{{ room.image.url }}">
+    <h1>TimeSlot</h1>
+    {% for timeslot in timeslots %}
+        <p>Start Time : {{timeslot.start_time|date:"g:iA"}} End Time: {{timeslot.end_time|date:"g:iA"}} Status: {{timeslot.status}}</p>
+    
+    {% endfor %}
+</body>
+{% endblock %}
