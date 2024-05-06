@@ -29,10 +29,11 @@ def room(request, room_id):
     timeslot_choices = []
 
     for timeslot in room_timeslots:
-        timeslot_display = f"{timeslot.start_time.strftime('%H:%M')} - {timeslot.end_time.strftime('%H:%M')}"
+        timeslot_display = f"{timeslot.start_time.strftime('%I:%M %p')} - {timeslot.end_time.strftime('%I:%M %p')}"
         if timeslot.status == 'Empty':
             timeslot_choices.append((timeslot.id, timeslot_display))
 
     form = RoomForm()
     form.fields['timeslots'].choices = timeslot_choices
     return render(request, 'rooms/room.html', {'room': room_data, 'timeslots':room_timeslots, 'form':form})
+

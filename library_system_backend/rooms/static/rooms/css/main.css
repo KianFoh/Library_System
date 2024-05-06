@@ -1,12 +1,5 @@
 /* styles.css */
 
-.form-check-label {
-    color: black;
-}
-
-.requiredField{
-    color: red;
-}
 
 /* Adjust the display property of the label elements */
 .form-check-label {
@@ -33,4 +26,10 @@
 .form-check-input:checked + .form-check-label {
     background-color: green; /* Change to green when checked */
     border-color: green; /* Change border color to green when checked */
+}
+
+div > .form-check {
+    display: inline-block;
+    width: calc(20% - 20px); /* 20% width for each .form-check with margin */
+
 }

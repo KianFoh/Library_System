@@ -28,7 +28,8 @@ def activate(request, uidb64, token):
 
         # Display success message after activation
         messages.success(request, "Thank you for your email confirmation. Now you can login your account.")
-    
+    else:
+        messages.warning(request, "Activation failed. The activation link is either invalid or expired.")
     return redirect('/')
 
 
@@ -52,7 +53,7 @@ def activateEmail(request, user, to_email):
         messages.success(request, message_content)
     else:
         # Display error message if email sending fails
-        message.error(request, f'Problem sending email to {to_email}, Please check if you typed it correctly.')
+        message.warning(request, f'Problem sending email to {to_email}, Please check if you typed it correctly.')
 
 
 def signup_view(request):
