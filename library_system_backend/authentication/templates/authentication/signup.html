@@ -25,6 +25,8 @@
                     <div class="form-group d-flex justify-content-between" id="signup_bot">
                         <div>
                             <p>Already have an account? <a href="/login">Log in</a></p>
+                            {% load socialaccount %}
+                            <a href="{% provider_login_url 'google' %}">Sign in with Google</a>
                         </div>
                         <div>
                             <button type="submit" class="btn btn-primary" id="sub" onclick="this.disabled=true; this.form.submit();">Sign Up</button>

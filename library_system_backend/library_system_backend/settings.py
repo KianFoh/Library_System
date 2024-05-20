@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+SITE_ID = 1 
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -54,7 +56,21 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap4',
     'pytz',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
+SOCIALACCOUNT_LOGIN_ON_GET= True
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE":[
+            "profile",
+            "email"
+        ],
+        "AUTH_PARAMS": {"access_type": "online"}
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -64,6 +80,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "allauth.account.middleware.AccountMiddleware", # remove this, which only used in v0.56+
 ]
 
 ROOT_URLCONF = 'library_system_backend.urls'
@@ -129,8 +146,6 @@ LANGUAGE_CODE = 'en-us'
 # Set the timezone to Malaysia time
 TIME_ZONE = 'Asia/Kuala_Lumpur'
 
-
-
 # Enable timezone support
 USE_TZ = False
 USE_I18N = True
@@ -162,8 +177,18 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'intilibrarysystem@gmail.com'
 EMAIL_HOST_PASSWORD = 'nymm eepy zoct uxeq'
 
+# Email Verification Expire time
 PASSWORD_RESET_TIMEOUT = 10000
 
+# Media saving location
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# Google sign in 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
