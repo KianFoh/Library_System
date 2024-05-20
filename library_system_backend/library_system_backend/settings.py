@@ -162,7 +162,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'intilibrarysystem@gmail.com'
 EMAIL_HOST_PASSWORD = 'nymm eepy zoct uxeq'
 
-PASSWORD_RESET_TIMEOUT = 1
+PASSWORD_RESET_TIMEOUT = 10000
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

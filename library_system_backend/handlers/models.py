@@ -9,5 +9,5 @@ def save_image(instance, output_size=(500, 500)):
         output_size: A tuple representing the size of the thumbnail. Default is (500, 500).
     """
     img = Image.open(instance.image.path)
-    img.thumbnail(output_size)
+    img = img.resize(output_size)
     img.save(instance.image.path)

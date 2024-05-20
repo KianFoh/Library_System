@@ -12,7 +12,6 @@ from .token import account_activation_token  # Importing custom token for accoun
 from django.contrib.auth.models import User
 from user_data.models import User_data  # Importing the user_data model from the user_data app
 
-
 def activate(request, uidb64, token):
     User = get_user_model()  # Get the user model
     try:
@@ -27,7 +26,7 @@ def activate(request, uidb64, token):
         user.save()
 
         # Display success message after activation
-        messages.success(request, "Thank you for your email confirmation. Now you can login your account.")
+        messages.success(request, "Thank you for your email confirmation. Now you can login to your account.")
     else:
         messages.warning(request, "Activation failed. The activation link is either invalid or expired.")
     return redirect('/')
@@ -90,15 +89,40 @@ def login_view(request):
             username_or_email = form.cleaned_data['username_or_email']
             password = form.cleaned_data['password']
 
-            # Try authenticating with username first, then try with email
-            user = authenticate(request, username=username_or_email, password=password)
-            if user is None:
+            # Email
+            if '@' in    username_or_email:
                 try:
-                    user = User.objects.get(email=username_or_email)
-                    user = authenticate(username=user.username, password=password)
-                except User.DoesNotExist:
-                    pass
-            
+                    user = None
+                    user_temp = User.objects.get(email=username_or_email)
+                    print(user_temp.password)
+                    print(password)
+                    user = authenticate(request, username=user_temp.username, password=password)
+                    if user_temp.check_password(password):
+                        if not user_temp.is_active:
+                            activateEmail(request, user_temp, user_temp.email)
+                            form.add_error(None, "Your account is inactive. A new verification link has been sent to your email. Please check your inbox to activate your account.")
+                    else:           
+                        form.add_error(None, "Invalid username/email or password.")
+                except User.DoesNotExist:   
+                    form.add_error(None, "Invalid username/email or password.")
+
+
+            # Username    
+            else:
+                user = authenticate(request, username=username_or_email, password=password)
+                if user is None:
+                    try:
+                        print('hello')
+                        user_temp = User.objects.get(username=username_or_email)
+                        if user_temp.check_password(password):
+                            if not user_temp.is_active:
+                                activateEmail(request, user_temp, user_temp.email)
+                                form.add_error(None, "Your account is inactive.")
+                        else:
+                            form.add_error(None, "Invalid username/email or password.")
+                    except User.DoesNotExist:
+                        form.add_error(None, "Invalid username/email or password.")
+
             # If user authentication is successful, log them in
             if user:
                 login(request, user)

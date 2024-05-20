@@ -3,3 +3,5 @@ djangoenv/
 __pycache__/
 
 **/migrations/
+
+media/
