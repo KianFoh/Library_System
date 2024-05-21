@@ -24,6 +24,8 @@
 
                         <div class="form-group d-flex justify-content-between" id="login_bot">
                             <div>
+                                {% load socialaccount %}
+                                <a href="{% url 'google_login' %}">Sign in with Google</a>
                                 <p>Forgot your password? <a href="/login">Reset it here</a></p>
                             </div>
                             <div>

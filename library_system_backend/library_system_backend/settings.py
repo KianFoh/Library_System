@@ -192,3 +192,5 @@ AUTHENTICATION_BACKENDS = (
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+SOCIALACCOUNT_ADAPTER = 'authentication.adapter.MySocialAccountAdapter'
