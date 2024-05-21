@@ -67,9 +67,6 @@ def signup_view(request):
             user.is_active = False  # Set user as inactive until email is verified
             user.save()
 
-            # Create a corresponding user_data object
-            User_data.objects.create(user=user)
-
             # Send activation email
             activateEmail(request, user, form.cleaned_data.get('email'))
             return redirect('/login')
