@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from authentication.views import login_cancelled
 
 urlpatterns = [
     path('', include('home.urls')),
@@ -27,6 +28,7 @@ urlpatterns = [
     path('contact/', include('contact.urls')),
     path('admin/', admin.site.urls),
     path('', include('authentication.urls')),
+    path('accounts/3rdparty/login/cancelled/', login_cancelled, name='social_login_cancelled'),
     path('accounts/', include('allauth.urls')),
 ]
 

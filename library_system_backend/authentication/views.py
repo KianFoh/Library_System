@@ -10,7 +10,6 @@ from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
 from .token import account_activation_token  # Importing custom token for account activation
 from django.contrib.auth.models import User
-from user_data.models import User_data  # Importing the user_data model from the user_data app
 
 def activate(request, uidb64, token):
     User = get_user_model()  # Get the user model
@@ -135,4 +134,7 @@ def login_view(request):
 def logout_view(request):
     # Log out the user and redirect to home page
     logout(request)
+    return redirect('home')
+
+def login_cancelled(request):
     return redirect('home')

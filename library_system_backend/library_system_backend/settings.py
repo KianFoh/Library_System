@@ -81,6 +81,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "allauth.account.middleware.AccountMiddleware", # remove this, which only used in v0.56+
+    'authentication.middleware.RestrictAllauthAccessMiddleware',
 ]
 
 ROOT_URLCONF = 'library_system_backend.urls'
