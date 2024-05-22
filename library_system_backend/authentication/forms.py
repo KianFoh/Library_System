@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.contrib.auth import authenticate
+from django.contrib.auth.forms import SetPasswordForm
 
 class SignupForm(UserCreationForm):
     # Define a form for user signup with email field required
@@ -32,3 +32,13 @@ class LoginForm(forms.Form):
     username_or_email = forms.CharField(label="Username or Email")
     password = forms.CharField(widget=forms.PasswordInput)
 
+class ResetPasswordAuthenticate(forms.Form):
+    email = forms.CharField(label="Email")
+
+class CustomSetPasswordForm(SetPasswordForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Remove help text from password fields
+        self.fields['new_password1'].help_text = ''
+        self.fields['new_password2'].help_text = ''

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.contrib import messages
-from .forms import SignupForm, LoginForm  # Importing forms from local module
+from .forms import SignupForm, LoginForm, ResetPasswordAuthenticate  # Importing forms from local module
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
@@ -10,6 +10,9 @@ from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
 from .token import account_activation_token  # Importing custom token for account activation
 from django.contrib.auth.models import User
+from django.utils.encoding import force_str
+from .forms import CustomSetPasswordForm
+from .token import account_activation_token, reset_password_token
 
 def activate(request, uidb64, token):
     User = get_user_model()  # Get the user model
@@ -33,7 +36,7 @@ def activate(request, uidb64, token):
 
 def activateEmail(request, user, to_email):
     # Compose the activation email
-    mail_subject = "Activate your user account."
+    mail_subject = "Activate your user account - INTI Penang College Library System"
     message = render_to_string("authentication/template_activate_account.html", {
         'user': user.username,
         'domain': get_current_site(request).domain,
@@ -138,3 +141,64 @@ def logout_view(request):
 
 def login_cancelled(request):
     return redirect('home')
+
+def reset_password_email(request, user, to_email):
+    # Compose the reset password email
+    mail_subject = "Reset Your Password - INTI Penang College Library System"
+    message = render_to_string("authentication/reset_password_email.html", {
+        'user': user,
+        'domain': get_current_site(request).domain,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': reset_password_token.make_token(user),
+        "protocol": 'https' if request.is_secure() else 'http'
+    })
+
+    # Send the reset password email
+    email = EmailMessage(mail_subject, message, to=[to_email])
+    try:
+        email.send()
+        # Display success message if email is sent successfully
+        message_content = mark_safe(f'A password reset email has been sent to <b>{to_email}</b>. \
+                        Please check your email and follow the instructions to reset your password.')
+        messages.success(request, message_content)
+    except:
+        # Display error message if email sending fails
+        message_content = mark_safe(f'Problem sending email to <b>{to_email}</b>. \
+                        Please check if you typed it correctly.')
+        messages.error(request, message_content)
+
+def reset_password_authenticate(request):
+    if request.user.is_authenticated:
+     return redirect('home')
+    if request.method == 'POST':
+        form = ResetPasswordAuthenticate(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            user = User.objects.filter(email = email).first()
+            if user:
+                reset_password_email(request, user, user.email)
+            else:
+                form.add_error(None, "Invalid Email")
+    else:
+        form = ResetPasswordAuthenticate()
+    return render(request, 'authentication/reset_password_authenticate.html', {'form': form})
+
+def password_reset_confirm(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and reset_password_token.check_token(user, token):
+        if request.method == 'POST':
+            form = CustomSetPasswordForm(user, request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Your password has been reset.')
+                return redirect('login')
+        else:
+            form = CustomSetPasswordForm(user)
+        return render(request, 'authentication/reset_password.html', {'form': form})
+    else:
+        messages.warning(request, 'The password reset link is invalid or expired.')
+        return redirect('/resetpassword/authentication')
