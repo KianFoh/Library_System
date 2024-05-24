@@ -6,14 +6,28 @@
 {% endblock title %}
 
 {% block content %}
+<!-- 在 head 部分引入 Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<link rel="stylesheet" href="{% static 'room/css/main.css' %}" type="text/css">
 <body>
-    <h1>{{ room.name }}</h1>
-    <p>Min Pax :{{room.min_pax}} Max Pax:{{room.max_pax}}</p>
-    <img src="{{ room.image.url }}">
-    <h1>TimeSlot</h1>
-    {% for timeslot in timeslots %}
-        <p>Start Time : {{timeslot.start_time|date:"g:iA"}} End Time: {{timeslot.end_time|date:"g:iA"}} Status: {{timeslot.status}}</p>
-    
-    {% endfor %}
+    <a href="{% url 'rooms' %}" style="position: absolute; top: 10px; left: 10px; text-decoration: none;">
+        <i class="fas fa-arrow-left"></i> 
+    </a>
+    <h1 class="tcenter">{{ room.name }}</h1>
+    <p class="tcenter"">Min Pax: {{ room.min_pax }} Max Pax: {{ room.max_pax }}</p>
+    <div class="tcenter">
+        <img src="{{ room.image.url }}" alt="{{ room.name }}" style="max-width: 100%; height: auto;">
+    </div>
+    <h1 class="tcenter">TimeSlot</h1>
+    <div class="timeslot-container">
+        {% for timeslot in timeslots %}
+            <div class="timeslot">
+                <p class="start-time">Start Time: {{ timeslot.start_time|date:"g:iA" }}</p>
+                <p class="end-time">End Time: {{ timeslot.end_time|date:"g:iA" }}</p>
+                
+            </div>
+        {% endfor %}
+    </div>
 </body>
 {% endblock %}

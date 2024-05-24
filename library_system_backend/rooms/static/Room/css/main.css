@@ -1,0 +1,41 @@
+/* Updated CSS styles for timeslot display */
+.timeslot-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap; /* Prevent wrapping to next line */
+    overflow-x: auto; /* Enable horizontal scrolling if necessary */
+}
+
+.timeslot {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    min-width: 200px; /* Set a minimum width for each timeslot */
+}
+
+.timeslot p {
+    margin: 5px 0;
+    font-weight: bold;
+    color: #333;
+}
+
+.tcenter{
+    text-align: center;
+}
+
+/* styles.css */
+
+/* 返回按钮样式 */
+.back-to-rooms {
+    position: absolute;
+    top: 30px;
+    left: 10px;
+    text-decoration: none;
+    color: #333; /* 设置按钮文字颜色 */
+}
+
+.back-to-rooms i {
+    margin-right: 5px; /* 图标与文字之间的右边距 */
+}
