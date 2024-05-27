@@ -1,5 +1,111 @@
 /* styles.css */
 
+<<<<<<< HEAD
 #a {
     color: red;
 }
+=======
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+#a{
+    font-family: Arial, sans-serif; 
+    color: white; 
+    font-size: 3em; 
+    text-align: center; 
+    padding: 20px; 
+    background-color: #3498db; 
+    animation: slideIn 1s forwards; 
+}
+.container {
+    padding: 20px; /* 设置容器内边距 */
+}
+
+.content {
+    background-color: #ffffff; /* 内容区背景色 */
+    border-radius: 10px; /* 圆角边框 */
+    padding: 20px; /* 内容区内边距 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+    transition: transform 0.3s ease; /* 添加鼠标悬停效果 */
+}
+
+.content:hover {
+    transform: translateY(-10px); /* 悬停时上移 */
+}
+
+.caption {
+    text-align: center; /* 文字居中 */
+    margin-top: 20px; /* 上边距 */
+}
+
+.caption h2 {
+    font-size: 24px; /* 标题字体大小 */
+    font-weight: bold; /* 标题加粗 */
+    color: #333333; /* 标题颜色 */
+    margin-bottom: 10px; /* 下边距 */
+}
+
+.caption p {
+    font-size: 16px; /* 段落字体大小 */
+    color: #666666; /* 段落颜色 */
+    line-height: 1.5; /* 设置行高 */
+    margin-bottom: 10px; /* 段落下边距 */
+}
+
+/* 自定义折叠内容样式 */
+.collapse-toggle {
+    display: none; /* 隐藏默认的复选框 */
+}
+
+.collapse-content {
+    display: none; /* 默认隐藏折叠内容 */
+}
+
+.collapse-toggle:checked + .collapse-content {
+    display: block; /* 当复选框被选中时显示折叠内容 */
+}
+
+.collapse-inner {
+    background-color: #f8f9fa;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* 图像放大效果 */
+.img-fluid:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+/* 标题/解释部分的背景和边框效果 */
+.text-left:hover {
+    background-color: #f8f9fa; /* 添加悬停时的背景色 */
+    border: 1px solid #ced4da; /* 添加悬停时的边框 */
+    padding: 20px; /* 添加悬停时的内边距 */
+    transition: all 0.3s ease;
+}
+
+/* 图像和文本部分的过渡效果 */
+.col-md-6 {
+    transition: transform 0.3s ease;
+}
+
+/* 图像悬停时的位移效果 */
+.col-md-6:hover {
+    transform: translateX(-10px); /* 图像向左移动 10px */
+}
+
+
+
+
+
+>>>>>>> Ooi-Xing-Hong
