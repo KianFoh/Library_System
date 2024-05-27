@@ -10,15 +10,6 @@
     }
 }
 
-#a{
-    font-family: Arial, sans-serif; 
-    color: white; 
-    font-size: 3em; 
-    text-align: center; 
-    padding: 20px; 
-    background-color: #3498db; 
-    animation: slideIn 1s forwards; 
-}
 .container {
     padding: 20px; /* 设置容器内边距 */
 }
