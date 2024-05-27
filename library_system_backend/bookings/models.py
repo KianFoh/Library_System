@@ -57,20 +57,3 @@ class Booking(models.Model):
         if all(booking_user.status == 'Approved' for booking_user in self.bookinguser_set.all()):
             self.status = 'Completed'
             self.save()
-
-class BookingUser(models.Model):
-    USER_STATUS_CHOICES = [
-        ('Pending', _('Pending')),
-        ('Approved', _('Approved')),
-        ('Rejected', _('Rejected')),
-    ]
-
-    booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    status = models.CharField(max_length=20, choices=USER_STATUS_CHOICES, default='Pending')
-
-    class Meta:
-        unique_together = ('booking', 'user')
-
-    def __str__(self):
-        return f"{self.user.username}: {self.status}"
