@@ -32,6 +32,11 @@
                         <a class="nav-link" href="/bookings" id ="nav-item">Bookings</a>
                         <a class="nav-link" href="/about" id ="nav-item">About</a>
                         <a class="nav-link" href="/contact" id ="nav-item">Contact</a>
+                        {% if user.is_authenticated %}
+                            {% if user.is_staff %}
+                            <a class="nav-link" href="/admin" id ="nav-item">Admin</a>
+                            {% endif %}
+                        {% endif %}
 
                     </div>
                     <div>
