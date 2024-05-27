@@ -55,7 +55,7 @@
         {% if form.timeslots.errors %}
             <div id="error_1_id_timeslots">{{ form.timeslots.errors }}</div>
         {% endif %}
-        <button type="submit">Add to Booking</button>
+        <button type="submit" id="sub" onclick="this.disabled=true; this.form.submit();">Add to Booking</button>
     </form>
     {% else %}
     <p>No available timeslots for booking.</p>

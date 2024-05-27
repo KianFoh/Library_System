@@ -1,4 +1,4 @@
-{% extends 'navigation\navigation.html' %}
+{% extends 'navigation/navigation.html' %}
 {% load static %}
 
 {% block title %}
@@ -10,6 +10,87 @@
     <!-- Css -->
     <link rel="stylesheet" href="{% static 'bookings/css/main.css' %}" type="text/css">
 </head>
-<h1 id="a">Bookings</h1>
+
+<body>
+    <div class="container">
+        <h1 id="title" class="my-4">Bookings</h1>
+        {% if user.is_authenticated %}
+            {% if bookings %}
+                {% for booking in bookings %}
+                    <div class="col-md-12 mb-4">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                <h2 class="card-title mb-0">Booking ID: {{ booking.id }}</h2>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text"><strong>Booking Status:</strong> {{ booking.status }}</p>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>Student</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for booking_user in booking.bookinguser_set.all %}
+                                                <tr>
+                                                    <td>{{ booking_user.user.username }}</td>
+                                                    <td>{{ booking_user.status }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="room-details">
+                                    <h4 class="mt-4 mb-3">Room Name: {{ booking.time_slot.first.room.name }}</h4>
+                                    <h4 class="mb-3">Timeslots:</h4>
+                                    <ul class="list-group">
+                                        {% for timeslot in booking.time_slot.all %}
+                                            <li class="list-group-item">
+                                                {{ timeslot.start_time|time:"h:i A" }} - {{ timeslot.end_time|time:"h:i A" }}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="buttons mt-4 text-center row">
+                                    {% if booking.id not in pending_booking_ids %}
+                                        <div class="col-md-6 px-md-1">
+                                            <button id='sub' type="button" class="btn btn-primary btn-lg custom-btn-width" disabled>Approve</button>
+                                        </div>
+                                        <div class="col-md-6 px-md-1">
+                                            <button id='sub' type="button" class="btn btn-danger btn-lg custom-btn-width" disabled>Reject</button>
+                                        </div>
+                                    {% else %}
+                                        <div class="col-md-6 px-md-1">
+                                            <form method="POST" action="{% url 'approve_booking' %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="booking_id" value="{{ booking.id }}">
+                                                <input type="hidden" name="user_id" value="{{ user.id }}">
+                                                <button id='sub' type="submit" class="btn btn-primary btn-lg custom-btn-width" onclick="this.disabled=true; this.form.submit();">Approve</button>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-6 px-md-1">
+                                            <form method="POST" action="{% url 'reject_booking' %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="booking_id" value="{{ booking.id }}">
+                                                <input type="hidden" name="user_id" value="{{ user.id }}">
+                                                <button id='sub' type="submit" class="btn btn-danger btn-lg custom-btn-width" onclick="this.disabled=true; this.form.submit();">Reject</button>
+                                            </form>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="alert alert-warning">You have no bookings.</p>
+            {% endif %}
+        {% else %}
+            <p class="alert alert-warning">You need to log in to your account to view bookings.</p>
+        {% endif %}
+    </div>
+</body>
 
 {% endblock %}

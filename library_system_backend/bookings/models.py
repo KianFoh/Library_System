@@ -56,4 +56,6 @@ class Booking(models.Model):
     def update_status(self):
         if all(booking_user.status == 'Approved' for booking_user in self.bookinguser_set.all()):
             self.status = 'Completed'
-            self.save()
+        elif any(booking_user.status == 'Rejected' for booking_user in self.bookinguser_set.all()):
+            self.status = 'Canceled'
+        self.save()

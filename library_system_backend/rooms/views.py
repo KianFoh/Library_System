@@ -9,11 +9,6 @@ from django.contrib import messages
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User
 from user_data.models import User_data 
-from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
 from django.core.mail import EmailMessage
 
 def rooms(request):
@@ -39,9 +34,9 @@ def send_booking_email(users, initiator, room, room_timeslots, request):
     # Construct the URL for the website
     website_url = "http://127.0.0.1:8000/"
 
-    subject = 'Booking Confirmation'
+    subject = 'Booking Approval Request'
     message = (
-        f'Booking Confirmation\n\n'
+        f'Booking Approval Request\n\n'
         f'Hello,\n\n'
         f'You have a pending booking confirmation.\n\n'
         f'Room: {room.name}\n\n'
@@ -62,7 +57,7 @@ def send_booking_email(users, initiator, room, room_timeslots, request):
 
     message += (
         f'\nStudents: {students_names}.\n'
-        f'Please go to the booking page on the library room booking website to confirm the booking:\n'
+        f'Please go to the booking page on the library room booking website to approve the booking:\n'
         f'{website_url}\n\n'
         'If you don\'t approve, please disregard this email.\n\n'  # Adjusted to "don't approve"
         'Thank you.\n'
@@ -71,7 +66,7 @@ def send_booking_email(users, initiator, room, room_timeslots, request):
     try:
         email = EmailMessage(subject, message, to=recipients)
         email.send()
-        message_content = 'Booking has been added. Please go to the booking page to confirm.'
+        message_content = 'Booking has been added. Please go to the booking page to approve.'
         messages.success(request, message_content)
     except Exception as e:
         message_content = f'Failed to send booking confirmation email to {", ".join(recipients)}: {str(e)}'
