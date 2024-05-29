@@ -28,7 +28,7 @@ def approve_booking(request):
             booking = Booking.objects.get(id=booking_id)
             booking_user.status = 'Approved'
             booking_user.save()
-            booking.update_status()
+            booking.update_status(request)
         else:
             message_content = mark_safe('You have already approved or rejected this booking.')
             messages.warning(request, message_content)
@@ -45,7 +45,7 @@ def reject_booking(request):
             booking = Booking.objects.get(id=booking_id)
             booking_user.status = 'Rejected'
             booking_user.save()
-            booking.update_status()
+            booking.update_status(request)
         else:
             message_content = mark_safe('You have already approved or rejected this booking.')
             messages.warning(request, message_content)
