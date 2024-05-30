@@ -7,7 +7,6 @@ from user_data.models import User_data
 from django.contrib import messages
 from django.utils.safestring import mark_safe
 from django.shortcuts import redirect
-from django.utils.dateformat import time_format
 from django.core.mail import EmailMessage
 
 class Timeslot(models.Model):
@@ -21,8 +20,8 @@ class Timeslot(models.Model):
     start_time = models.DateTimeField(null=False)
     end_time = models.DateTimeField(null=False)
     status = models.CharField(max_length=20, choices=TIMESLOT_STATUS_CHOICES, default='Empty', null=False)
-    
-def __str__(self):
+
+    def __str__(self):
         return f"Timeslot for {self.room} from {self.start_time} to {self.end_time} ({self.status})"
 
 class BookingUser(models.Model):
@@ -52,7 +51,7 @@ class Booking(models.Model):
     time_slot = models.ManyToManyField(Timeslot)
     date_time = models.DateTimeField(default=datetime.now)
     status = models.CharField(max_length=20, choices=BOOKING_STATUS_CHOICES, default='Pending')
-    
+
     def __str__(self):
         return f"Booking for {self.get_time_slots()} ({self.status})"
 
@@ -63,95 +62,72 @@ class Booking(models.Model):
         try:
             email = EmailMessage(subject, message, to=user_emails)
             email.send()
-
         except Exception as e:
-            message_content = f'Failed to send booking status notice email to {", ".join(user_emails)}: {str(e)}'
+            message_content = f'Failed to send booking notification email to {", ".join(user_emails)}: {str(e)}'
             messages.warning(request, message_content)
 
     def update_status(self, request):
-        # Check if all booking users have an approved status
+        current_user = request.user
+        booking_user = self.bookinguser_set.filter(user=current_user).first()
+        timeslots = self.time_slot.all()
+        booking_users = self.bookinguser_set.all()
+        user_emails = [booking_user.user.email for booking_user in booking_users]
+
         if self._all_booking_users_approved():
-            timeslots = self.time_slot.all()
-            booking_users = self.bookinguser_set.all()
-            user_emails = [booking_user.user.email for booking_user in booking_users]
-            print(user_emails)
-            # Check if any timeslot is already booked
-            if self._timeslots_already_booked(timeslots, request, user_emails):
+            if self._timeslots_already_booked(timeslots, request, user_emails, booking_user):
                 return redirect('bookings')
-        
-            # Process each booking user
+
             for booking_user in booking_users:
                 if self._user_exceeds_booking_limit(booking_user, request, len(timeslots), user_emails):
                     return redirect('bookings')
 
-            # Update booking statuses and room usage hours
-            self._finalize_booking(timeslots, booking_users)
-
-        # Check if any booking user has a rejected status
+            self._finalize_booking(timeslots, booking_users, request, user_emails)
         elif self._any_booking_user_rejected():
-            self._cancel_booking()
+            self._cancel_booking(request, booking_user, user_emails)
+        elif booking_user.status == 'Approved':
+            message_content = mark_safe(f'Approved Booking ID {self.id} request.')
+            messages.success(request, message_content)
 
     def _all_booking_users_approved(self):
-        """Check if all booking users have an approved status."""
-        return all(booking_user.status == 'Approved' for booking_user in self.bookinguser_set.all())
+        return not self.bookinguser_set.exclude(status='Approved').exists()
 
     def _any_booking_user_rejected(self):
-        """Check if any booking user has a rejected status."""
-        return any(booking_user.status == 'Rejected' for booking_user in self.bookinguser_set.all())
+        return self.bookinguser_set.filter(status='Rejected').exists()
 
-    def _timeslots_already_booked(self, timeslots, request, user_emails):
-        """Check if any of the timeslots are already booked."""
+    def _timeslots_already_booked(self, timeslots, request, user_emails, booking_user):
         for timeslot in timeslots:
             if timeslot.status == 'Booked':
-                room_name = timeslot.room.name
-                start_time = timeslot.start_time.strftime('%I:%M %p')
-                end_time = timeslot.end_time.strftime('%I:%M %p')
-                message_content = mark_safe(f'The timeslot {start_time} - {end_time} for {room_name} is already booked.')
-                messages.warning(request, message_content)
-                self.status = 'Canceled'
-                self.save()
-
-                subject = f'Booking Canceled: ID {self.id}'
-                message = (
-                    f'Booking Canceled for Booking ID {self.id}\n\n'
-                    f'Dear Student,\n\n'
-                    f'The booking has been canceled due to:\n'
-                    f'The timeslot for Room: {room_name} from {start_time} to {end_time} has already been booked.\n\n'
-                    f'Thank you for your understanding.\n\n'
-                    f'Best regards,\n'
-                )
-
-                self.send_booking_email(request, subject, message, user_emails)
+                self._notify_already_booked(request, timeslot, booking_user, user_emails)
                 return True
         return False
 
+    def _notify_already_booked(self, request, timeslot, booking_user, user_emails):
+        room_name = timeslot.room.name
+        start_time = timeslot.start_time.strftime('%I:%M %p')
+        end_time = timeslot.end_time.strftime('%I:%M %p')
+        message_content = mark_safe(f'The timeslot {start_time} - {end_time} for {room_name} is already booked.')
+        messages.warning(request, message_content)
+        reason = f'The timeslot for Room: {room_name} from {start_time} to {end_time} has already been booked.'
+        self._reject_booking_user(request, booking_user, reason, user_emails)
+
     def _user_exceeds_booking_limit(self, booking_user, request, num_timeslots, user_emails):
-        """Check if the user exceeds the booking limit and handle the rejection if needed."""
-        user = booking_user.user
-        user_data = User_data.objects.get(user=user)
-        username = user.username
-        hour_usage = user_data.room_usage_hour
+        user_data = User_data.objects.get(user=booking_user.user)
+        total_usage = user_data.room_usage_hour + num_timeslots
 
-        if hour_usage == 2:
-            reason = f'{username} has reached the maximum daily booking limit of 2 hours.'
+        if total_usage > 2:
+            remaining_hours = 2 - user_data.room_usage_hour
+            reason = f'{booking_user.user.username} has only {remaining_hours} hours remaining. Maximum daily booking limit is 2 hours.'
             self._reject_booking_user(request, booking_user, reason, user_emails)
             return True
-
-        if hour_usage + num_timeslots > 2:
-            remaining_hours = 2 - hour_usage
-            reason = f'{username} does not have enough remaining booking hours. Maximum daily booking limit is 2 hours. {username} has {remaining_hours} hours left.'
-            self._reject_booking_user(request, booking_user, reason, user_emails)
-            return True
-
         return False
 
     def _reject_booking_user(self, request, booking_user, reason, user_emails):
-        """Reject a booking user and set booking status to canceled."""
         messages.warning(request, mark_safe(reason))
         booking_user.status = 'Rejected'
         booking_user.save()
         self.status = 'Canceled'
         self.save()
+
         subject = f'Booking Canceled: ID {self.id}'
         message = (
             f'Booking Canceled for Booking ID {self.id}\n\n'
@@ -164,24 +140,32 @@ class Booking(models.Model):
 
         self.send_booking_email(request, subject, message, user_emails)
 
-    def _finalize_booking(self, timeslots, booking_users):
-        """Update room usage hours, timeslot statuses, and booking status to completed."""
+    def _finalize_booking(self, timeslots, booking_users, request, user_emails):
         for booking_user in booking_users:
             user_data = User_data.objects.get(user=booking_user.user)
             user_data.room_usage_hour += len(timeslots)
             user_data.save()
 
-        for timeslot in timeslots:
-            timeslot.status = 'Booked'
-            timeslot.save()
-
+        timeslots.update(status='Booked')
         self.status = 'Completed'
         self.save()
-        # Send Email
 
-    def _cancel_booking(self):
-        """Set booking status to canceled."""
-        self.status = 'Canceled'
-        self.save()
-        # Send Email
+        message_content = mark_safe(f'Booking ID {self.id} has been successfully completed. ')
+        messages.success(request, message_content)
 
+        subject = f'Booking Completed: ID {self.id}'
+        message = (
+            f'Booking Completed for Booking ID {self.id}\n\n'
+            f'Dear Students,\n\n'
+            f'The booking process has been completed.\n\n'
+            f'Thank you for using INTI Penang Library Room Booking System.\n\n'
+            f'Best regards,\n'
+        )
+
+        self.send_booking_email(request, subject, message, user_emails)
+        
+
+    def _cancel_booking(self, request, booking_user, user_emails):
+        username = request.user.username
+        reason = f'{username} has rejected the booking.'
+        self._reject_booking_user(request, booking_user, reason, user_emails)
