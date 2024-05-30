@@ -85,7 +85,7 @@ class Booking(models.Model):
         elif self._any_booking_user_rejected():
             self._cancel_booking(request, booking_user, user_emails)
         elif booking_user.status == 'Approved':
-            message_content = mark_safe(f'Approved Booking ID {self.id} request.')
+            message_content = mark_safe(f'Approved Booking ID: {self.id} request.')
             messages.success(request, message_content)
 
     def _all_booking_users_approved(self):
@@ -105,9 +105,7 @@ class Booking(models.Model):
         room_name = timeslot.room.name
         start_time = timeslot.start_time.strftime('%I:%M %p')
         end_time = timeslot.end_time.strftime('%I:%M %p')
-        message_content = mark_safe(f'The timeslot {start_time} - {end_time} for {room_name} is already booked.')
-        messages.warning(request, message_content)
-        reason = f'The timeslot for Room: {room_name} from {start_time} to {end_time} has already been booked.'
+        reason = f'the timeslot for {room_name} from {start_time} to {end_time} has already been booked.'
         self._reject_booking_user(request, booking_user, reason, user_emails)
 
     def _user_exceeds_booking_limit(self, booking_user, request, num_timeslots, user_emails):
@@ -116,24 +114,24 @@ class Booking(models.Model):
 
         if total_usage > 2:
             remaining_hours = 2 - user_data.room_usage_hour
-            reason = f'{booking_user.user.username} has only {remaining_hours} hours remaining. Maximum daily booking limit is 2 hours.'
+            reason = f'{booking_user.user.username} does not have enough daily booking hours to complete the booking request.'
             self._reject_booking_user(request, booking_user, reason, user_emails)
             return True
         return False
 
     def _reject_booking_user(self, request, booking_user, reason, user_emails):
-        messages.warning(request, mark_safe(reason))
+        messages.warning(request, mark_safe(f'Booking ID: {self.id} has been canceled due to {reason}'))
         booking_user.status = 'Rejected'
         booking_user.save()
         self.status = 'Canceled'
         self.save()
 
-        subject = f'Booking Canceled: ID {self.id}'
+        subject = f'Booking Canceled: Booking ID: {self.id}'
         message = (
-            f'Booking Canceled for Booking ID {self.id}\n\n'
+            f'Booking Canceled for Booking ID: {self.id}\n\n'
             f'Dear Student,\n\n'
             f'The booking has been canceled due to:\n'
-            f'{reason} \n\n'
+            f'{reason.capitalize()} \n\n'
             f'Thank you for your understanding.\n\n'
             f'Best regards,\n'
         )
@@ -150,12 +148,12 @@ class Booking(models.Model):
         self.status = 'Completed'
         self.save()
 
-        message_content = mark_safe(f'Booking ID {self.id} has been successfully completed. ')
+        message_content = mark_safe(f'Booking ID: {self.id} has been successfully completed. ')
         messages.success(request, message_content)
 
-        subject = f'Booking Completed: ID {self.id}'
+        subject = f'Booking Completed: Booking ID: {self.id}'
         message = (
-            f'Booking Completed for Booking ID {self.id}\n\n'
+            f'Booking Completed for Booking ID: {self.id}\n\n'
             f'Dear Students,\n\n'
             f'The booking process has been completed.\n\n'
             f'Thank you for using INTI Penang Library Room Booking System.\n\n'
@@ -167,5 +165,5 @@ class Booking(models.Model):
 
     def _cancel_booking(self, request, booking_user, user_emails):
         username = request.user.username
-        reason = f'{username} has rejected the booking.'
+        reason = f'{username} rejecting the request.'
         self._reject_booking_user(request, booking_user, reason, user_emails)
