@@ -36,9 +36,19 @@ class MySocialAccountAdapter(DefaultSocialAccountAdapter):
         user = super().populate_user(request, sociallogin, data)
         # Use email without domain as username
         email = user.email
-        username = email.split('@')[0]
-        user.username = slugify(username)  # Convert username to slug
+        base_username = email.split('@')[0]
+        slugified_username = slugify(base_username)  # Convert username to slug
+        
+        # Generate a unique username
+        unique_username = slugified_username
+        counter = 1
+        while User.objects.filter(username=unique_username).exists():
+            unique_username = f"{slugified_username}{counter}"
+            counter += 1
+        
+        user.username = unique_username
         # Do not set first name and last name
         user.first_name = ''
         user.last_name = ''
         return user
+    
