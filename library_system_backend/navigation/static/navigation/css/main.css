@@ -20,8 +20,13 @@
     position: relative;
     margin-right: 20px;
 }
+.small-button {
+    padding: 5px 15px;
+    font-size: 14px; /* 调整字体大小 */
+}
 
 #auth-item:hover {
     box-shadow: 0 0 10px 5px #3498db;
 }
+
 
