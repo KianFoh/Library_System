@@ -5,27 +5,42 @@
     font-size: 25px;
 }
 
-#nav-items{
-    margin-right: 250px;
+#nav-item{
+    color: black;
 }
 
-#auth-item {
+#auth-item-profile {
     display: inline-block;
     padding: 10px 30px;
-    background-color: #3498db; 
+    background-color: #070707; 
     color: white; 
     text-decoration: none;
     border-radius: 50px; 
     transition: background-color 0.3s ease;
     position: relative;
-    margin-right: 20px;
+    margin-left: 200px;
 }
+#auth-item {
+    display: inline-block;
+    padding: 10px 30px;
+    background-color: #070707; 
+    color: white; 
+    text-decoration: none;
+    border-radius: 50px; 
+    transition: background-color 0.3s ease;
+    position: relative;
+    margin-left: 30px;
+}
+
 .small-button {
     padding: 5px 15px;
     font-size: 14px; /* 调整字体大小 */
 }
 
 #auth-item:hover {
+    box-shadow: 0 0 10px 5px #3498db;
+}
+#auth-item-profile:hover {
     box-shadow: 0 0 10px 5px #3498db;
 }
 
