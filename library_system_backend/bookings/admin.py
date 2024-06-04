@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Timeslot, Booking
+from .models import Timeslot, Booking, BookingUser
 
 class TimeslotAdmin(admin.ModelAdmin):
     list_display = ('timeslot_id','room', 'formatted_start_time', 'formatted_end_time', 'status')
@@ -30,21 +30,15 @@ admin.site.register(Timeslot, TimeslotAdmin)
 
 
 class BookingAdmin(admin.ModelAdmin):
-
     list_display = ('id', 'display_users', 'formatted_date_time', 'status')
 
     def display_users(self, obj):
-        return ', '.join([user.username for user in obj.users.all()])
+        return ', '.join([booking_user.user.username for booking_user in obj.bookinguser_set.all()])
     
-        # Format datetime field as DD/MM/YYYY HH:MM
     def formatted_date_time(self, obj):
-        """Custom method to format datetime field"""
-        return obj.date_time.strftime("%d/%m/%Y %I:%M %p")  
+        return obj.date_time.strftime("%d/%m/%Y %I:%M %p")
 
-    # Sort
     formatted_date_time.admin_order_field = 'date_time'
-
-    # Set column header
     formatted_date_time.short_description = 'Date and time'
     display_users.short_description = 'Users'
 

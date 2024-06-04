@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.contrib.auth import authenticate
+from django.contrib.auth.forms import SetPasswordForm
 
 class SignupForm(UserCreationForm):
     # Define a form for user signup with email field required
@@ -32,30 +32,13 @@ class LoginForm(forms.Form):
     username_or_email = forms.CharField(label="Username or Email")
     password = forms.CharField(widget=forms.PasswordInput)
 
-    def clean(self):
-        cleaned_data = super().clean()
-        username_or_email = cleaned_data.get('username_or_email')
-        password = cleaned_data.get('password')
-        if username_or_email and password:
-            # Check if username_or_email exists as a username in auth_user
-            user = User.objects.filter(username=username_or_email).first()
-            
-            if user is None:
-                # Check if username_or_email exists as an email in the email column
-                user = User.objects.filter(email=username_or_email).first()
-                if user is not None:
-                    username_or_email = user.username
-            else:
-                # If user exists as a username, authenticate using username
-                username_or_email = user.username
+class ResetPasswordAuthenticate(forms.Form):
+    email = forms.CharField(label="Email")
 
-            # Check if user is found and is active
-            if user is not None and not user.is_active:
-                raise ValidationError("Your account is inactive. Please check your email inbox for a verification link to activate your account.")
+class CustomSetPasswordForm(SetPasswordForm):
 
-            # Authenticate the user
-            user = authenticate(username=username_or_email, password=password)
-            if user is None:
-                raise ValidationError("Invalid username/email or password.")
-
-        return cleaned_data
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Remove help text from password fields
+        self.fields['new_password1'].help_text = ''
+        self.fields['new_password2'].help_text = ''

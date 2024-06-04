@@ -38,6 +38,11 @@
                         <a class="nav-link" href="/bookings" id ="nav-item">Bookings</a>
                         <a class="nav-link" href="/about" id ="nav-item">About</a>
                         <a class="nav-link" href="/contact" id ="nav-item">Contact</a>
+                        {% if user.is_authenticated %}
+                            {% if user.is_staff %}
+                            <a class="nav-link" href="/admin" id ="nav-item">Admin</a>
+                            {% endif %}
+                        {% endif %}
 
                     </div>
                     <div>
@@ -56,6 +61,10 @@
             {% for message in messages %}
                 {% if message.tags == 'success' %}
                     <div class="alert alert-success alert-dismissible" role="alert">
+                        {{ message|safe|escape }}
+                    </div>
+                {% elif message.tags == 'warning' %}
+                    <div class="alert alert-danger alert-dismissible" role="alert">
                         {{ message|safe|escape }}
                     </div>
                 {% endif %}

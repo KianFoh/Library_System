@@ -24,10 +24,12 @@
 
                         <div class="form-group d-flex justify-content-between" id="login_bot">
                             <div>
-                                <p>Forgot your password? <a href="/login">Reset it here</a></p>
+                                {% load socialaccount %}
+                                <a href="{% url 'google_login' %}">Sign in with Google</a>
+                                <p>Forgot your password? <a href="/resetpassword/authentication">Reset it here</a></p>
                             </div>
                             <div>
-                                <button type="submit" class="btn btn-primary" id="sub">Log In</button>
+                                <button type="submit" class="btn btn-primary" id="sub" id="sub" onclick="this.disabled=true; this.form.submit();">Log In</button>
                             </div>
                         </div>
                     </form>
