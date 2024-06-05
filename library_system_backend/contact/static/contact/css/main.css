@@ -1,3 +1,13 @@
+/* 滑入动画 */
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
 /* 标题样式 */
 h1 {
     text-align: center;
@@ -36,7 +46,7 @@ h1 {
 /* 表单输入框样式 */
 form input,
 form textarea {
-    width: 100%;
+    width: 80%; /* 调整宽度 */
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -53,6 +63,12 @@ form textarea:focus {
     box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
 }
 
+/* 提交按钮容器样式 */
+form {
+    text-align: center; /* 按钮居中对齐 */
+    margin-top: 20px; /* 顶部外边距 */
+}
+
 /* 提交按钮样式 */
 #sub {
     background-color: #4CAF50; /* 绿色背景 */
@@ -63,7 +79,6 @@ form textarea:focus {
     text-decoration: none; /* 无下划线 */
     display: inline-block; /* 行内块元素 */
     font-size: 16px; /* 文字大小 */
-    margin: 20px 0; /* 外边距 */
     cursor: pointer; /* 鼠标指针样式 */
     border-radius: 12px; /* 圆角边框 */
     transition: background-color 0.3s ease, transform 0.2s ease; /* 背景颜色过渡效果和按钮按下特效 */
@@ -83,4 +98,26 @@ form textarea:focus {
 #sub:disabled {
     background-color: #bfbfbf; /* 禁用时的背景颜色 */
     cursor: not-allowed; /* 禁用时的鼠标指针样式 */
+}
+
+/* 联系信息样式 */
+.contact-info {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.social-logo {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease;
+}
+
+.social-logo:hover {
+    transform: scale(1.1);
+}
+
+.contact-info p {
+    font-size: 16px;
+    color: #333;
 }
