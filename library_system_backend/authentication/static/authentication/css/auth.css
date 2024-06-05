@@ -40,7 +40,11 @@
     text-align: center;
     transition: background-color 0.3s;
 }
-
+.google-logo {
+    width: 24px;  /* Increased size for better visibility */
+    height: 24px; /* Increased size for better visibility */
+    margin-right: 8px;
+}
 .google-btn:hover {
     background-color: #357ae8;
 }
