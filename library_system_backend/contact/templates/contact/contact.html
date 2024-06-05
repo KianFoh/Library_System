@@ -8,6 +8,8 @@
 {% endblock title %}
 
 {% block content %}
+
+<link rel="stylesheet" href="{% static 'contact/css/main.css' %}" type="text/css">
 <h1>Contact</h1>
 <form method="post" action="{% url 'send_contact_email' %}">
     {% csrf_token %}

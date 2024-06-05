@@ -18,11 +18,11 @@
 
         <style>
         .navbar-pink {
-            background-color: #f38787; /* 红粉色 */
+            background-color: #f38787;
             height: 80px;
         }
         #nav-items .nav-link {
-            color: rgb(2, 2, 2); /* 更改为你需要的颜色 */
+            color: rgb(2, 2, 2); 
             font-weight: bold;
         }
             
@@ -52,11 +52,11 @@
                     </div>
                     <div>
                         {% if user.is_authenticated %}
-                            <a class="nav-link" href="#" id="auth-item" style="margin-left:130px;">Profile</a>
-                            <a class="nav-link" href="/logout" id="auth-item">Logout</a>
+                            <a class="nav-link" href="#" id="auth-item" style="margin-left: 140px;">Profile</a>
+                            <a class="nav-link" href="/logout" id="auth-item"style="margin: 10px;">Logout</a>
                         {% else %}
-                            <a class="nav-link" href="/login" id="auth-item" style="margin-left:220px;">Login</a>
-                            <a class="nav-link" href="/signup" id="auth-item">Sign Up</a>
+                            <a class="nav-link" href="/login" id="auth-item" style="margin-left: 230px;">Login</a>
+                            <a class="nav-link" href="/signup" id="auth-item"style="margin: 10px;">Sign Up</a>
                         {% endif %}
                     </div>
                 </div>
