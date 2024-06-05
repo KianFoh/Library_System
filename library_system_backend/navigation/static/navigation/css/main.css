@@ -5,21 +5,6 @@
     font-size: 25px;
 }
 
-#nav-item{
-    color: black;
-}
-
-#auth-item-profile {
-    display: inline-block;
-    padding: 10px 30px;
-    background-color: #070707; 
-    color: white; 
-    text-decoration: none;
-    border-radius: 50px; 
-    transition: background-color 0.3s ease;
-    position: relative;
-    margin-left: 200px;
-}
 #auth-item {
     display: inline-block;
     padding: 10px 30px;
@@ -29,7 +14,7 @@
     border-radius: 50px; 
     transition: background-color 0.3s ease;
     position: relative;
-    margin-left: 30px;
+    margin-left: 200px;
 }
 
 .small-button {
