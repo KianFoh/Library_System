@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'rooms.apps.RoomsConfig',
     'bookings.apps.BookingsConfig',
-    'about.apps.AboutConfig',
     'contact.apps.ContactConfig',
     'footer.apps.FooterConfig',
     'authentication.apps.AuthenticationConfig',
