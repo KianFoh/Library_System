@@ -25,7 +25,10 @@
                         <div>
                             <p>Already have an account? <a href="/login">Log in</a></p>
                             {% load socialaccount %}
-                            <a href="{% provider_login_url 'google' %}">Sign in with Google</a>
+                            <a href="{% url 'google_login' %}" class="google-signin-button">
+                                <img src="{% static 'authentication/image/google.png' %}" alt="Google logo" class="google-logo">
+                                Sign in with Google
+                            </a>
                         </div>
                         <div>
                             <button type="submit" class="btn btn-primary" id="sub" onclick="this.disabled=true; this.form.submit();">Sign Up</button>

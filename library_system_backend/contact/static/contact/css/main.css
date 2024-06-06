@@ -1,5 +1,123 @@
-/* styles.css */
+/* 滑入动画 */
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
 
-#a{
-    color: aqua;
+/* 标题样式 */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 36px;
+    color: #333;
+    animation: slideIn 1s ease-out;
+}
+
+/* 表单容器样式 */
+.form-container {
+    background: #fff;
+    padding: 30px 50px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto; /* 居中对齐 */
+}
+
+/* 表单组样式 */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left; /* 左对齐标签 */
+}
+
+/* 表单标签样式 */
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+/* 表单输入框样式 */
+form input,
+form textarea {
+    width: 80%; /* 调整宽度 */
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+form input:focus,
+form textarea:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+}
+
+/* 提交按钮容器样式 */
+form {
+    text-align: center; /* 按钮居中对齐 */
+    margin-top: 20px; /* 顶部外边距 */
+}
+
+/* 提交按钮样式 */
+#sub {
+    background-color: #4CAF50; /* 绿色背景 */
+    border: none; /* 无边框 */
+    color: white; /* 白色文字 */
+    padding: 15px 32px; /* 内边距 */
+    text-align: center; /* 文字居中 */
+    text-decoration: none; /* 无下划线 */
+    display: inline-block; /* 行内块元素 */
+    font-size: 16px; /* 文字大小 */
+    cursor: pointer; /* 鼠标指针样式 */
+    border-radius: 12px; /* 圆角边框 */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* 背景颜色过渡效果和按钮按下特效 */
+}
+
+/* 提交按钮悬停效果 */
+#sub:hover {
+    background-color: #45a049; /* 悬停时的背景颜色 */
+}
+
+/* 提交按钮按下效果 */
+#sub:active {
+    transform: scale(0.98); /* 按下时缩小按钮 */
+}
+
+/* 提交按钮禁用样式 */
+#sub:disabled {
+    background-color: #bfbfbf; /* 禁用时的背景颜色 */
+    cursor: not-allowed; /* 禁用时的鼠标指针样式 */
+}
+
+/* 联系信息样式 */
+.contact-info {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.social-logo {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease;
+}
+
+.social-logo:hover {
+    transform: scale(1.1);
+}
+
+.contact-info p {
+    font-size: 16px;
+    color: #333;
 }
