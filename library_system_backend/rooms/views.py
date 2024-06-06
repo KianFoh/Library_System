@@ -28,15 +28,15 @@ def rooms(request):
     return HttpResponse(template.render(context, request))
 
 # Function to send booking confirmation email
-def send_booking_email(users, initiator, room, room_timeslots, request):
+def send_booking_email(booking_id, users, initiator, room, room_timeslots, request):
     recipients = [user.email for user in users]
 
     # Construct the URL for the website
     website_url = "http://127.0.0.1:8000/"
 
-    subject = 'Booking Approval Request'
+    subject = f'Booking Approval Request: ID {booking_id}'
     message = (
-        f'Booking Approval Request\n\n'
+         f'Booking Approval Request for Booking ID {booking_id}\n\n'
         f'Hello,\n\n'
         f'You have a pending booking confirmation.\n\n'
         f'Room: {room.name}\n\n'
@@ -102,6 +102,9 @@ def room(request, room_id):
                 elif request.user.username not in usernames:
                     message_content = mark_safe('Your username must be included in the usernames.')
                     messages.warning(request, message_content)
+                elif len(usernames) != len(set(usernames)):
+                    message_content = mark_safe('Usernames must be unique. Please ensure there are no duplicate entries.')
+                    messages.warning(request, message_content)
                 else:
                     users_data = []
                     time_slots_data = []
@@ -142,7 +145,7 @@ def room(request, room_id):
                     new_booking.save()
 
                     #Send booking confirmation email to all users involve
-                    send_booking_email(users_data, request.user, room_data, time_slots_data, request)
+                    send_booking_email(new_booking.id ,users_data, request.user, room_data, time_slots_data, request)
 
         else:
             form = RoomForm(min_users=room_data.min_pax, max_users=room_data.max_pax)

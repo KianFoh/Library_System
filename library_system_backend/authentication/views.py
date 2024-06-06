@@ -10,7 +10,6 @@ from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
 from .token import account_activation_token  # Importing custom token for account activation
 from django.contrib.auth.models import User
-from django.utils.encoding import force_str
 from .forms import CustomSetPasswordForm
 from .token import account_activation_token, reset_password_token
 

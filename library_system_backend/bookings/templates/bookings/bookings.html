@@ -56,10 +56,10 @@
                                 <div class="buttons mt-4 text-center row">
                                     {% if booking.id not in pending_booking_ids %}
                                         <div class="col-md-6 px-md-1">
-                                            <button id='sub' type="button" class="btn btn-primary btn-lg custom-btn-width" disabled>Approve</button>
+                                            <button type="button" class="btn btn-primary btn-lg custom-btn-width" disabled>Approve</button>
                                         </div>
                                         <div class="col-md-6 px-md-1">
-                                            <button id='sub' type="button" class="btn btn-danger btn-lg custom-btn-width" disabled>Reject</button>
+                                            <button type="button" class="btn btn-danger btn-lg custom-btn-width" disabled>Reject</button>
                                         </div>
                                     {% else %}
                                         <div class="col-md-6 px-md-1">
@@ -67,7 +67,7 @@
                                                 {% csrf_token %}
                                                 <input type="hidden" name="booking_id" value="{{ booking.id }}">
                                                 <input type="hidden" name="user_id" value="{{ user.id }}">
-                                                <button id='sub' type="submit" class="btn btn-primary btn-lg custom-btn-width" onclick="this.disabled=true; this.form.submit();">Approve</button>
+                                                <button id="approve-{{ booking.id }}" type="submit" class="btn btn-primary btn-lg custom-btn-width" onclick="disableButtons({{ booking.id }}); this.form.submit();">Approve</button>
                                             </form>
                                         </div>
                                         <div class="col-md-6 px-md-1">
@@ -75,7 +75,7 @@
                                                 {% csrf_token %}
                                                 <input type="hidden" name="booking_id" value="{{ booking.id }}">
                                                 <input type="hidden" name="user_id" value="{{ user.id }}">
-                                                <button id='sub' type="submit" class="btn btn-danger btn-lg custom-btn-width" onclick="this.disabled=true; this.form.submit();">Reject</button>
+                                                <button id="reject-{{ booking.id }}" type="submit" class="btn btn-danger btn-lg custom-btn-width" onclick="disableButtons({{ booking.id }}); this.form.submit();">Reject</button>
                                             </form>
                                         </div>
                                     {% endif %}
@@ -91,6 +91,13 @@
             <p class="alert alert-warning">You need to log in to your account to view bookings.</p>
         {% endif %}
     </div>
+
+    <script>
+        function disableButtons(bookingId) {
+            document.getElementById('approve-' + bookingId).disabled = true;
+            document.getElementById('reject-' + bookingId).disabled = true;
+        }
+    </script>
 </body>
 
 {% endblock %}

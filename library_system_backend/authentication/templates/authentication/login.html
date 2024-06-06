@@ -25,7 +25,10 @@
                         <div class="form-group d-flex justify-content-between" id="login_bot">
                             <div>
                                 {% load socialaccount %}
-                                <a href="{% url 'google_login' %}">Sign in with Google</a>
+                                <a href="{% url 'google_login' %}" class="google-signin-button">
+                                    <img src="{% static 'authentication/image/google.png' %}" alt="Google logo" class="google-logo">
+                                    Sign in with Google
+                                </a>
                                 <p>Forgot your password? <a href="/resetpassword/authentication">Reset it here</a></p>
                             </div>
                             <div>

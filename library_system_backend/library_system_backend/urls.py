@@ -28,6 +28,7 @@ urlpatterns = [
     path('contact/', include('contact.urls')),
     path('admin/', admin.site.urls),
     path('', include('authentication.urls')),
+    path('profile/', include('profile_.urls')),
     path('accounts/3rdparty/login/cancelled/', login_cancelled, name='social_login_cancelled'),
     path('accounts/', include('allauth.urls')),
 ]

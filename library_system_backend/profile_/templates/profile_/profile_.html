@@ -1,0 +1,56 @@
+{% extends 'navigation/navigation.html' %}
+{% load static %}
+
+{% block title %}
+<title>Profile</title>
+{% endblock title %}
+
+{% block content %}
+<h1>Profile</h1>
+<div id="profile-view">
+    <p>
+        <strong>Username:</strong> {{ user.username }}
+    </p>
+    <p>
+        <strong>Password:</strong> 
+        <form method="post" action="{% url 'request_password_change' %}">
+            {% csrf_token %}
+            <button type="submit" style="background: none; border: none; color: blue; text-decoration: underline; cursor: pointer;">Change Password</button>
+        </form>
+    </p>
+    <p>
+        <strong>Email:</strong> {{ user.email }}
+    </p>
+    <p>
+        <strong>Daily Booking Hours Left:</strong>
+        <span>
+            {{ booking_hours_left }} hours left
+        </span>
+    </p>
+    <button id="edit-button">Edit</button>
+</div>
+
+<div id="profile-edit" style="display: none;">
+    <form method="post" action="{% url 'profile_update' %}">
+        {% csrf_token %}
+        <p>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="{{ user.username }}" required>
+        </p>
+        <button type="submit">Save</button>
+        <button type="button" id="cancel-button">Cancel</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('edit-button').addEventListener('click', function() {
+        document.getElementById('profile-view').style.display = 'none';
+        document.getElementById('profile-edit').style.display = 'block';
+    });
+
+    document.getElementById('cancel-button').addEventListener('click', function() {
+        document.getElementById('profile-view').style.display = 'block';
+        document.getElementById('profile-edit').style.display = 'none';
+    });
+</script>
+{% endblock %}
