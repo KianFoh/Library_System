@@ -7,6 +7,15 @@
 {% endblock title %}
 
 {% block content %}
+<style>
+    .room-image {
+        width: 400px;
+        height: auto; 
+        margin-left: 270px;
+        margin-top: 30px;
+    }
+
+</style>
 <head>
     <link rel="stylesheet" href="{% static 'rooms/css/main.css' %}" type="text/css">
     <script>
@@ -39,10 +48,14 @@
 </head>
 
 <body>
-    <h1>{{ room.name }}</h1>
-    <p>Min Pax: {{ room.min_pax }} Max Pax: {{ room.max_pax }}</p>
-    <img src="{{ room.image.url }}">
-    <h1>Available TimeSlot</h1>
+    <div style="display: flex; align-items: center; margin-left: 260px;">
+        <a href="/rooms/" style="font-size: 40px; text-decoration: none; margin-top: -10px; color: #808080;">&lt;</a>
+        <h1 style="margin-left: 15px;">{{ room.name }}</h1>
+    </div>
+    <img src="{{ room.image.url }}" class="room-image">
+    <p style="margin-left: 270px; margin-top: 10px;">Room available: {{ room.min_pax }} - {{ room.max_pax }} Pax</p>
+    
+    <h1 class="timeslot-heading">Available TimeSlot</h1>
 
     {% if form %}
     <form method="post">
