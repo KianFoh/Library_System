@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'django_celery_beat',
 ]
 SOCIALACCOUNT_LOGIN_ON_GET= True
 SOCIALACCOUNT_PROVIDERS = {
@@ -195,3 +196,14 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 SOCIALACCOUNT_ADAPTER = 'authentication.adapter.MySocialAccountAdapter'
+
+# Celery Configuration
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
+CELERY_BEAT_SCHEDULE = {
+    'print_hello_task': {
+        'task': 'bookings.tasks.print_hello',  # Path to your task
+        'schedule': 10.0,  # Run every 10 seconds
+    },
+}
