@@ -153,6 +153,7 @@
         <img src="{{ room.image.url }}" style="margin-top: -300px;">
         
 
+<<<<<<< HEAD
         {% if form %}
         <div class="booking-form">
             <form method="post">
@@ -167,6 +168,16 @@
                 {% endif %}
                 <button class="booking-button" type="submit" id="sub" onclick="this.disabled=true; this.form.submit();">Add to Booking</button>
             </form>
+=======
+    {% if form %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.timeslots|as_crispy_field }}
+        {{ form.number_of_users|as_crispy_field }}
+        <input type="hidden" id="current-username" value="{{ request.user.username }}">
+        <div id="usernames-container">
+            <!-- Username fields will be appended here -->
+>>>>>>> master
         </div>
         {% else %}
         <p>No available timeslots for booking.</p>

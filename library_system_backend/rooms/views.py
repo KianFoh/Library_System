@@ -3,7 +3,7 @@ from django.template import loader
 from django.http import HttpResponse
 from .models import Room
 from bookings.models import Timeslot, Booking, BookingUser
-from datetime import datetime
+from datetime import datetime, time
 from .forms import RoomForm
 from django.contrib import messages
 from django.utils.safestring import mark_safe
@@ -75,13 +75,16 @@ def send_booking_email(booking_id, users, initiator, room, room_timeslots, reque
 def room(request, room_id):
     room_data = get_object_or_404(Room, pk=room_id)
     room_timeslots = Timeslot.objects.filter(room_id=room_id)
-
     timeslot_choices = []
+    current_time = datetime.now().time()
+    start_time = time(8, 0, 0)
+    end_time = time(18, 0, 0)
 
-    for timeslot in room_timeslots:
-        timeslot_display = f"{timeslot.start_time.strftime('%I:%M %p')} - {timeslot.end_time.strftime('%I:%M %p')}"
-        if timeslot.status == 'Empty':
-            timeslot_choices.append((timeslot.id, timeslot_display))
+    if start_time <= current_time <= end_time:
+        for timeslot in room_timeslots:
+            timeslot_display = f"{timeslot.start_time.strftime('%I:%M %p')} - {timeslot.end_time.strftime('%I:%M %p')}"
+            if timeslot.status == 'Empty' and current_time < timeslot.end_time.time():
+                timeslot_choices.append((timeslot.id, timeslot_display))
     
     if timeslot_choices:
         if request.method == 'POST':

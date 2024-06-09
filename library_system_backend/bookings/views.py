@@ -2,13 +2,18 @@ from django.shortcuts import render, redirect
 from django.utils.safestring import mark_safe
 from .models import Booking, BookingUser
 from django.contrib import messages
+from datetime import datetime, date
 
 def bookings(request):
     if not request.user.is_authenticated:
         messages.warning(request, mark_safe('Please login before accessing the Booking page'))
         return redirect('login')
 
-    bookings_user = BookingUser.objects.filter(user=request.user).order_by('-id')
+    # Get today's date
+    today_date = date.today()
+
+    # Filter bookings made today
+    bookings_user = BookingUser.objects.filter(user=request.user, booking__date_time__date=today_date).order_by('-id')
     bookings = Booking.objects.filter(bookinguser__in=bookings_user).order_by('-id')
     pending_booking_ids = bookings_user.filter(status='Pending').values_list('booking_id', flat=True)
 
