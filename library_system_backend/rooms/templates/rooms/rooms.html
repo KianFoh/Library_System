@@ -6,29 +6,42 @@
 {% endblock title %}
 
 {% block content %}
-
 <style>
-    .rooms_container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 25px;
-        text-align: center;
-        max-width: 1200px;
-        margin: 0 auto;
+    .room_info a {
+    text-decoration: none;
+    color: black;
+    }
+
+    .room_info a:hover {
+        text-decoration: none;
+        color: black;
+    }
+
+    .unavailable_rooms_link {
+        text-decoration: none;
+        color: black;
+    }
+
+    .unavailable_rooms_link:hover {
+        text-decoration: none;
+        color: black;
     }
     .room {
-        box-sizing: border-box;
+    border: 1px solid #ccc; /* Light grey border */
+    padding: 16px; /* Padding inside the box */
+    margin: 16px; /* Margin outside the box */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    background-color: #f9f9f9; /* Light background color */
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for transform and box-shadow */
     }
-    .room img {
-        width: 100%;
-        height: auto;
-    }
-    h1 {
-        margin-left: 260px;
-    }
-    
-</style>
 
+    .room:hover {
+        transform: translateY(-10px); /* Lift the box up slightly */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhance the shadow on hover */
+    }
+</style>
+<link rel="stylesheet" href="{% static 'rooms/css/main.css' %}" type="text/css">
 <body>
     <h1>Rooms</h1>
     {# Check if got rooms #}
@@ -41,7 +54,6 @@
                 {% if room.id in available_rooms %}
                 <a class="unavailable_rooms_link" href="{% url 'room' room.id %}">
                     <img src="{{ room.image.url }}">
-                    <div class = "room_info"></div>
                         <h3>{{room.name}}</h3>
                         <p>{{room.min_pax}} - {{room.max_pax}} Pax</p>
                 </a>

@@ -2,37 +2,46 @@
 
 
 /* Adjust the display property of the label elements */
-.form-check-label {
+
+/* .form-check {
     display: inline-block;
-    margin-right: 10px; /* Adjust spacing between boxes */
-    margin-bottom: 10px; /* Add margin-bottom to create space between rows */
-}
+    width: calc(20% - 20px);
+    margin-bottom: 10px; Add margin-bottom to create space between rows */
+/* }
 
-.form-check-input {
-    /* Hide the default checkbox input */
-    position: absolute;
-    opacity: 0;
-}
-
-/* Style the container to mimic a checkbox */
 .form-check-label {
     display: inline-block;
     padding: 10px;
-    border: 2px solid #aaa; /* Border color for the box */
-    cursor: pointer;
+    border: 2px solid #aaa; Border color for the box */
+    /* cursor: pointer;
+    transition: all 0.3s ease;
 }
+.form-check-input { */
+    /* Hide the default checkbox input */
+    /* position: absolute;
+    opacity: 0;
+} */
+
+/* Style the container to mimic a checkbox */
+/* .form-check-label {
+    display: inline-block;
+    padding: 10px;
+    border: 2px solid #aaa; Border color for the box */
+    /* cursor: pointer;
+} */
 
 /* Apply custom styles when the checkbox is checked */
-.form-check-input:checked + .form-check-label {
-    background-color: green; /* Change to green when checked */
-    border-color: green; /* Change border color to green when checked */
-}
+/* .form-check-input:checked + .form-check-label {
+    background-color: green; Change to green when checked */
+    /* border-color: green; /* Change border color to green when checked */
+/* }
 
 div > .form-check {
     display: inline-block;
-    width: calc(20% - 20px); /* 20% width for each .form-check with margin */
+    width: calc(20% - 20px); 20% width for each .form-check with margin
 
-}
+} */
+
 .rooms_container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
