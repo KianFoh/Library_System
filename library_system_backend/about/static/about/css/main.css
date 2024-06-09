@@ -1,26 +1,5 @@
 /* styles.css */
 
-
-/* 滑入动画 */
-@keyframes slideIn {
-    0% {
-        transform: translateX(-100%);
-    }
-    100% {
-        transform: translateX(0);
-    }
-}
-
-/* 标题样式 */
-#about {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 36px;
-    color: #333;
-    animation: slideIn 1s ease-out;
-}
-
-
 .container {
     padding: 20px; /* 设置容器内边距 */
 }

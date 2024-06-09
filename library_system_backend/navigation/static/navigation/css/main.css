@@ -4,8 +4,19 @@
     padding: 0px 100px;
     font-size: 25px;
 }
+.navbar-pink {
+    background-color: #f38787;
+    height: 80px;
+}
+#nav-items .nav-link {
+    color: rgb(2, 2, 2); 
+    font-weight: bold;
+}
+.navbar-brand{
+    margin-left: -100px;
+}
 
-#auth-item {
+#auth-item-profile {
     display: inline-block;
     padding: 10px 30px;
     background-color: #070707; 
@@ -14,6 +25,40 @@
     border-radius: 50px; 
     transition: background-color 0.3s ease;
     position: relative;
+    margin-left: 240px;
+}
+#auth-item-logout {
+    display: inline-block;
+    padding: 10px 30px;
+    background-color: #070707; 
+    color: white; 
+    text-decoration: none;
+    border-radius: 50px; 
+    transition: background-color 0.3s ease;
+    position: relative;
+    margin:10px;
+}
+#auth-item-login {
+    display: inline-block;
+    padding: 10px 30px;
+    background-color: #070707; 
+    color: white; 
+    text-decoration: none;
+    border-radius: 50px; 
+    transition: background-color 0.3s ease;
+    position: relative;
+    margin-left: 330px;
+}
+#auth-item-signup {
+    display: inline-block;
+    padding: 10px 30px;
+    background-color: #070707; 
+    color: white; 
+    text-decoration: none;
+    border-radius: 50px; 
+    transition: background-color 0.3s ease;
+    position: relative;
+    margin:10px;
 }
 
 .small-button {
@@ -21,11 +66,21 @@
     font-size: 14px; /* 调整字体大小 */
 }
 
-#auth-item:hover {
+#auth-item-logout:hover {
     box-shadow: 0 0 10px 5px #3498db;
 }
 #auth-item-profile:hover {
     box-shadow: 0 0 10px 5px #3498db;
+}
+#auth-item-login:hover {
+    box-shadow: 0 0 10px 5px #3498db;
+}
+#auth-item-signup:hover {
+    box-shadow: 0 0 10px 5px #3498db;
+}
+
+#nav-items .nav-link:hover{
+    text-shadow: 0 0 10px #3498db;
 }
 
 
