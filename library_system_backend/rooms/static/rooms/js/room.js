@@ -17,6 +17,7 @@ function updateUsernameFields() {
 
         if (i === 1) {
             input.value = currentUsername; // Set the first field to the current user's username
+            input.readOnly = true;
         }
 
         usernamesContainer.appendChild(label);
