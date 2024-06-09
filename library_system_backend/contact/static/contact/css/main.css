@@ -1,12 +1,4 @@
-/* 滑入动画 */
-@keyframes slideIn {
-    0% {
-        transform: translateX(-100%);
-    }
-    100% {
-        transform: translateX(0);
-    }
-}
+
 
 /* 标题样式 */
 h1 {
@@ -14,7 +6,16 @@ h1 {
     margin-bottom: 20px;
     font-size: 36px;
     color: #333;
-    animation: slideIn 1s ease-out;
+}
+
+/* 表单外部容器 */
+.outer-form-container {
+    margin-top: -60px;
+    display: flex;
+    justify-content: center; /* 水平居中对齐 */
+    align-items: center; /* 垂直居中对齐 */
+    height: 100vh; /* 使容器高度充满视口 */
+    background: #fff; /* 将背景颜色改为白色 */
 }
 
 /* 表单容器样式 */
@@ -22,7 +23,7 @@ h1 {
     background: #fff;
     padding: 30px 50px;
     border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.289);
     width: 100%;
     max-width: 600px;
     margin: 0 auto; /* 居中对齐 */
@@ -100,24 +101,3 @@ form {
     cursor: not-allowed; /* 禁用时的鼠标指针样式 */
 }
 
-/* 联系信息样式 */
-.contact-info {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.social-logo {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 10px;
-    transition: transform 0.3s ease;
-}
-
-.social-logo:hover {
-    transform: scale(1.1);
-}
-
-.contact-info p {
-    font-size: 16px;
-    color: #333;
-}

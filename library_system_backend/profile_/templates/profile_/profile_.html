@@ -6,17 +6,15 @@
 {% endblock title %}
 
 {% block content %}
-<h1>Profile</h1>
+<link rel="stylesheet" href="{% static 'profile/css/main.css' %}" type="text/css">
+
 <div id="profile-view">
+    <h1>Profile</h1>
     <p>
         <strong>Username:</strong> {{ user.username }}
     </p>
     <p>
         <strong>Password:</strong> 
-        <form method="post" action="{% url 'request_password_change' %}">
-            {% csrf_token %}
-            <button type="submit" style="background: none; border: none; color: blue; text-decoration: underline; cursor: pointer;">Change Password</button>
-        </form>
     </p>
     <p>
         <strong>Email:</strong> {{ user.email }}
@@ -27,7 +25,12 @@
             {{ booking_hours_left }} hours left
         </span>
     </p>
-    <button id="edit-button">Edit</button>
+    <form method="post" action="{% url 'request_password_change' %}">
+        {% csrf_token %}
+        <button type="submit" >Change Password</button>
+        <button id="edit-button">Edit Profile</button>
+    </form>
+    
 </div>
 
 <div id="profile-edit" style="display: none;">
