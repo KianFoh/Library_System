@@ -1,9 +1,6 @@
-/* styles.css */
-
 #auth_form {
     margin-top: 50px;
     margin-bottom: 50px;
-    
 }
 
 #auth_form_side{
@@ -12,25 +9,23 @@
     border-radius: 10px; 
 }
 
-
 #sub {
     width: 150px;
 }
 
-#signup_bot{
+#signup_bot {
     margin-top: 30px;
 }
 
-.form-group{
+.form-group {
     margin-bottom: 10px;
-    
 }
 
 .google-btn {
     display: inline-flex;
     align-items: center;
-    background-color: #4285F4;
-    color: white;
+    background-color: #4286f400;
+    color: rgb(5, 5, 5);
     padding: 10px 20px;
     border-radius: 4px;
     text-decoration: none;
@@ -39,6 +34,8 @@
     font-weight: bold;
     text-align: center;
     transition: background-color 0.3s;
+    justify-content: center; /* Center the text and logo inside the button */
+    border: 1px solid rgb(5, 5, 5); 
 }
 .google-logo {
     width: 24px;  /* Increased size for better visibility */
@@ -46,6 +43,24 @@
     margin-right: 8px;
 }
 .google-btn:hover {
-    background-color: #357ae8;
+    background-color: #357ae83e;
 }
 
+.or-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.or-divider span {
+    background-color: #fff; /* White background to overlap the line */
+    padding: 0 10px;
+    color: #888; /* Gray color for "or" text */
+}
+
+.or-divider::before, .or-divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #ccc;
+}

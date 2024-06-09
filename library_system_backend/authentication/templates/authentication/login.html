@@ -22,19 +22,26 @@
                         {% csrf_token %}
                         {{ form|crispy }}
 
-                        <div class="form-group d-flex justify-content-between" id="login_bot">
-                            <div>
+                        <div class="form-group text-center" id="login_bot">
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-primary" id="sub" onclick="this.disabled=true; this.form.submit();">Log In</button>
+                            </div>
+                            <div class="mb-3 or-divider">
+                                <span>or</span>
+                            </div>
+                            <div class="mb-3">
                                 {% load socialaccount %}
-                                <a href="{% url 'google_login' %}" class="google-signin-button">
+                                <a href="{% url 'google_login' %}" class="google-btn">
                                     <img src="{% static 'authentication/image/google.png' %}" alt="Google logo" class="google-logo">
                                     Sign in with Google
                                 </a>
-                                <p>Forgot your password? <a href="/resetpassword/authentication">Reset it here</a></p>
                             </div>
                             <div>
-                                <button type="submit" class="btn btn-primary" id="sub" id="sub" onclick="this.disabled=true; this.form.submit();">Log In</button>
+                                <p>Forgot your password? <a href="/resetpassword/authentication">Reset it here</a></p>
                             </div>
                         </div>
+                        
+                        
                     </form>
                 </div>
             </div>
