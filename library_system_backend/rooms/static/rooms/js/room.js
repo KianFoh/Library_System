@@ -1,8 +1,7 @@
-// update_fields.js
-
 function updateUsernameFields() {
     const numberOfUsers = parseInt(document.getElementById('id_number_of_users').value);
     const usernamesContainer = document.getElementById('usernames-container');
+    const currentUsername = document.getElementById('current-username').value;
     usernamesContainer.innerHTML = ''; // Clear any existing content
 
     for (let i = 1; i <= numberOfUsers; i++) {
@@ -15,6 +14,12 @@ function updateUsernameFields() {
         input.maxLength = 100;
         input.className = 'form-control';  // Apply Bootstrap styling
         input.required = true;
+
+        if (i === 1) {
+            input.value = currentUsername; // Set the first field to the current user's username
+            input.readOnly = true;
+        }
+
         usernamesContainer.appendChild(label);
         usernamesContainer.appendChild(input);
         usernamesContainer.appendChild(document.createElement('br'));
