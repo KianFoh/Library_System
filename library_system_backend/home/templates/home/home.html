@@ -13,13 +13,13 @@
 
 <body>
     <div class="container">
+        <!-- 第一部分：小标题和解释在左边，图像在右边 -->
         <div class="row align-items-center">
-            <!-- 第一部分：小标题和解释在左边，图像在右边 -->
             <div class="col-md-6">
                 <div class="text-left">
                     <h1 style="font-family:'Edwardian Script ITC';"> W e l c o m e </h1>
                     <h1 style="padding-left: 150px;font-family:'Edwardian Script ITC';"> T o </h1>
-                    <h1 style="padding-left: 200px; font-family:'Edwardian Script ITC';"> O u r</h1> 
+                    <h1 style="padding-left: 200px; font-family:'Edwardian Script ITC';"> O u r</h1>
                     <h1 style="padding-left: 250px; font-family:'Edwardian Script ITC';"> L i b r a r y</h1>
                 </div>
             </div>
@@ -28,8 +28,8 @@
             </div>
         </div>
     
+        <!-- 第二部分：图像在左边，标题和解释在右边 -->
         <div class="row align-items-center">
-            <!-- 第二部分：图像在左边，标题和解释在右边 -->
             <div class="col-md-6">
                 <img src="{% static 'home/image/Library.jpg' %}" alt="Image 2" class="img-fluid">
             </div>
@@ -42,7 +42,38 @@
             </div>
         </div>
     
-    
+        <!-- Announcements部分 -->
+        <div class="row align-items-center mt-5">
+            <div class="col-md-6">
+                <div class="text-left">
+                    <div class="announcement-box">
+                        <h1>Announcements</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                {% if annoucements %}
+                    <div class="most-recent-announcement-box">
+                        {% if annoucements.1 %}
+                            <div class="list-annoucements">
+                                {% for annoucement in annoucements %}
+                                    {% if forloop.counter > 1 %}
+                                        <a class="most-recent-announcement_link" href="{% url 'announcement' annoucement.id %}">
+                                            <div class="most-recent-announcement">
+                                                <p>{{ annoucement.title }} {{ annoucement.datetime }}</p>
+                                            </div>
+                                        </a>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <p>No Announcement</p>
+                {% endif %}
+            </div>
+        </div>
+        
     <div class="container">
         <!-- Supervisor 标题 -->
         <h2 class="text-center mb-4">Supervisor</h2>
@@ -127,44 +158,7 @@
             </div>
         </div>
     </div>
-    <h1>Announcements</h1>
-    
-    {# Check if got annoucements #}
-    {% if annoucements %} 
-        <h2>Most Recent Notice</h2>
-        <a class="most-recent-announcement_link" href="{% url 'announcement' annoucements.0.id %}">
-            <div class="most-recent-announcement">
-                {# Display the latest annoucement #}
-                <p>{{ annoucements.0.title }} {{ annoucements.0.datetime }}</p>
-                
-                    <img src="{{ annoucements.0.image.url }}">
-                
-            </div>
-        </a>
 
-        {# Check if there is more than one annoucement #}
-        {% if annoucements.1 %}
-            <h2>More Announcements</h2>
-            <div class="list-annoucements">
-                {# Iterate through annoucement #}
-                {% for annoucement in annoucements %}
-                    {# Exclude displaying latest announcement #}
-                    {% if forloop.counter > 1 %}
-                        <a class="most-recent-announcement_link" href="{% url 'announcement' annoucement.id %}">
-                            <div class ="annoucement">
-                                <p>{{ annoucement.title }} {{ annoucement.datetime }}</p>
-                                <img src="{{ annoucement.image.url }}">
-                            </div>
-                        </a>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        {% endif %}
-
-    {# If there is no annoucement display message#}
-    {% else %}
-        <p>No Announcement</p>
-    {% endif %}
 </body>
 
 <!-- 引入 Bootstrap 的 JavaScript 文件（包含折叠组件等） -->

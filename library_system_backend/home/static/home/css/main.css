@@ -56,6 +56,7 @@
     border-radius: 5px;
 }
 
+
 /* 图像放大效果 */
 .img-fluid:hover {
     transform: scale(1.05);
@@ -78,6 +79,44 @@
 /* 图像悬停时的位移效果 */
 .col-md-6:hover {
     transform: translateX(-10px); /* 图像向左移动 10px */
+}
+
+.most-recent-announcement-box, .annoucement-box {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+    width: auto;
+    height: 400px; /* 固定高度 */
+    overflow-y: hidden; /* 隐藏垂直滚动条 */
+    animation: scroll 20s linear infinite; /* 应用滚动动画，较长的时长 */
+}
+
+@keyframes slide {
+    0% {
+        transform: translateY(-80%);
+    }
+    50% {
+        transform: translateY(50%);
+    }
+    100% {
+        transform: translateY(150%);
+    }
+}
+
+.most-recent-announcement, .list-annoucements {
+    animation: slide 20s linear infinite;
+    animation-delay: 0ms; /* 等待0秒后开始动画 */
+}
+
+
+.most-recent-announcement, .annoucement {
+    padding: 10px;
+}
+
+.announcement-box {
+    text-align: center;
 }
 
 
