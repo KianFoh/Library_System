@@ -54,25 +54,27 @@
             <div class="col-md-6">
                 {% if annoucements %}
                     <div class="most-recent-announcement-box">
-                        {% if annoucements.1 %}
-                            <div class="list-annoucements">
+                        <div class="scrolling-content">
+                            <a class="most-recent-announcement_link" href="{% url 'announcement' annoucements.0.id %}">
+                                <p>{{ annoucements.0.title }} {{ annoucements.0.datetime }}</p>
+                            </a>
+                            {% if annoucements.1 %}
                                 {% for annoucement in annoucements %}
                                     {% if forloop.counter > 1 %}
                                         <a class="most-recent-announcement_link" href="{% url 'announcement' annoucement.id %}">
-                                            <div class="most-recent-announcement">
-                                                <p>{{ annoucement.title }} {{ annoucement.datetime }}</p>
-                                            </div>
+                                            <p>{{ annoucement.title }} {{ annoucement.datetime }}</p>
                                         </a>
                                     {% endif %}
                                 {% endfor %}
-                            </div>
-                        {% endif %}
+                            {% endif %}
+                        </div>
                     </div>
                 {% else %}
                     <p>No Announcement</p>
                 {% endif %}
             </div>
         </div>
+        
         
     <div class="container">
         <!-- Supervisor 标题 -->

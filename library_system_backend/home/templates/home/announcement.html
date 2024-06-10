@@ -6,10 +6,14 @@
 {% endblock title %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'home/css/main2.css' %}" type="text/css">
 <body>
-    <h1>{{ announcement.title }}</h1>
-    <p>{{ announcement.datetime }}</p>
-    <img src="{{ announcement.image.url }}">
-    <p>{{ announcement.description }}</p>
+    <div class="announcement-container">
+        <h1>Title: {{ announcement.title }}</h1>
+        <img src="{{ announcement.image.url }}" alt="Announcement Image">
+        <p>Date & Time: {{ announcement.datetime }}</p>
+        <p>Description: {{ announcement.description }}</p>
+    </div>
+    
 </body>
 {% endblock %}

@@ -1,0 +1,17 @@
+.announcement-container {
+    width: 100%;
+    max-width: 600px; /* 你可以根据需要调整 */
+    margin: 0 auto;
+    text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.announcement-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}

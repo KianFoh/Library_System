@@ -10,8 +10,10 @@
     padding: 20px; /* 内容区内边距 */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
     transition: transform 0.3s ease; /* 添加鼠标悬停效果 */
+    
 }
 
+ 
 .content:hover {
     transform: translateY(-10px); /* 悬停时上移 */
 }
@@ -81,39 +83,37 @@
     transform: translateX(-10px); /* 图像向左移动 10px */
 }
 
-.most-recent-announcement-box, .annoucement-box {
+.most-recent-announcement-box {
     border: 1px solid #ccc;
     padding: 15px;
     border-radius: 5px;
     background-color: #f9f9f9;
     margin-bottom: 20px;
     width: auto;
-    height: 400px; /* 固定高度 */
-    overflow-y: hidden; /* 隐藏垂直滚动条 */
-    animation: scroll 20s linear infinite; /* 应用滚动动画，较长的时长 */
+    height: 400px; 
+    overflow: hidden;
+    position: relative;
 }
 
-@keyframes slide {
+.scrolling-content {
+    animation: scroll 20s linear infinite;
+    position: absolute;
+    top: 100%;
+}
+
+@keyframes scroll {
     0% {
-        transform: translateY(-80%);
-    }
-    50% {
-        transform: translateY(50%);
+        transform: translateY(-270%);
     }
     100% {
-        transform: translateY(150%);
+        transform: translateY(100%);
     }
 }
 
-.most-recent-announcement, .list-annoucements {
-    animation: slide 20s linear infinite;
-    animation-delay: 0ms; /* 等待0秒后开始动画 */
+.most-recent-announcement-box:hover .scrolling-content {
+    animation-play-state: paused; 
 }
 
-
-.most-recent-announcement, .annoucement {
-    padding: 10px;
-}
 
 .announcement-box {
     text-align: center;
