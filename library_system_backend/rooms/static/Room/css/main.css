@@ -1,24 +1,23 @@
 /* Updated CSS styles for timeslot display */
 .timeslot-container {
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap; /* Prevent wrapping to next line */
-    overflow-x: auto; /* Enable horizontal scrolling if necessary */
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .timeslot {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #ccc;
+    background-color: grey;
+    color: white;
     padding: 10px;
-    margin: 10px;
-    min-width: 200px; /* Set a minimum width for each timeslot */
+    margin: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
-
 .timeslot p {
     margin: 5px 0;
     font-weight: bold;
-    color: #333;
+    color: lightblue;
 }
 
 .tcenter{
