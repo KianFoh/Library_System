@@ -10,10 +10,8 @@
     padding: 20px; /* 内容区内边距 */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
     transition: transform 0.3s ease; /* 添加鼠标悬停效果 */
-    
 }
 
- 
 .content:hover {
     transform: translateY(-10px); /* 悬停时上移 */
 }
@@ -58,7 +56,6 @@
     border-radius: 5px;
 }
 
-
 /* 图像放大效果 */
 .img-fluid:hover {
     transform: scale(1.05);
@@ -91,35 +88,58 @@
     margin-bottom: 20px;
     width: auto;
     height: 400px; 
-    overflow: hidden;
-    position: relative;
+    overflow: auto; /* 内容溢出时添加滚动条 */
 }
-
-.scrolling-content {
-    animation: scroll 20s linear infinite;
-    position: absolute;
-    top: 100%;
-}
-
-@keyframes scroll {
-    0% {
-        transform: translateY(-270%);
-    }
-    100% {
-        transform: translateY(100%);
-    }
-}
-
-.most-recent-announcement-box:hover .scrolling-content {
-    animation-play-state: paused; 
-}
-
 
 .announcement-box {
     text-align: center;
 }
 
+.announcement-list a {
+    display: block;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+    transition: all 0.3s ease;
+}
 
+.announcement-list a:hover {
+    background-color: #f1f1f1;
+    border-color: #999;
+}
 
+.latest-announcement-title {
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+    text-decoration: underline;
+    font-size: 20px;
+}
 
+.more-announcement-title {
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+    text-decoration: underline;
+    font-size: 18px;
+    margin-top: 15px;
+}
 
+.most-recent-announcement_link {
+    text-decoration: none;
+    color: black;
+    border: 1px solid #ddd; /* 添加边框 */
+    border-radius: 5px; /* 添加圆角 */
+    padding: 10px; /* 添加内边距 */
+    display: block; /* 块级元素 */
+    margin-bottom: 10px; /* 下边距 */
+    transition: all 0.3s ease; /* 过渡效果 */
+}
+
+.most-recent-announcement_link:hover {
+    background-color: #f1f1f1; /* 悬停时背景色 */
+    border-color: #999; /* 悬停时边框颜色 */
+    text-decoration: none; /* 去掉下划线 */
+    color: black; /* 悬停时字体颜色 */
+}

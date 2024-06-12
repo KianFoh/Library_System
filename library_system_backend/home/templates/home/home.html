@@ -54,27 +54,26 @@
             <div class="col-md-6">
                 {% if annoucements %}
                     <div class="most-recent-announcement-box">
-                        <div class="scrolling-content">
-                            <a class="most-recent-announcement_link" href="{% url 'announcement' annoucements.0.id %}">
-                                <p>{{ annoucements.0.title }} {{ annoucements.0.datetime }}</p>
-                            </a>
-                            {% if annoucements.1 %}
-                                {% for annoucement in annoucements %}
-                                    {% if forloop.counter > 1 %}
-                                        <a class="most-recent-announcement_link" href="{% url 'announcement' annoucement.id %}">
-                                            <p>{{ annoucement.title }} {{ annoucement.datetime }}</p>
-                                        </a>
-                                    {% endif %}
-                                {% endfor %}
-                            {% endif %}
-                        </div>
+                        <p class="latest-announcement-title">Latest Announcement</p>
+                        <a class="most-recent-announcement_link" href="{% url 'announcement' annoucements.0.id %}">
+                            <p>{{ annoucements.0.title }} {{ annoucements.0.datetime }}</p>
+                        </a>
+                        {% if annoucements.1 %}
+                            <p class="more-announcement-title">More Announcement</p>
+                            {% for annoucement in annoucements %}
+                                {% if forloop.counter > 1 %}
+                                    <a class="most-recent-announcement_link" href="{% url 'announcement' annoucement.id %}">
+                                        <p>{{ annoucement.title }} {{ annoucement.datetime }}</p>
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 {% else %}
                     <p>No Announcement</p>
                 {% endif %}
             </div>
-        </div>
-        
+        </div>        
         
     <div class="container">
         <!-- Supervisor 标题 -->
@@ -83,16 +82,19 @@
         <div class="row text-center">
             <div class="col">
                 <div class="content">
-                    <img src="{% static 'home/image/专业-2.jpeg' %}" alt="专业-2 image" class="img-fluid" width="400">
+                    <img src="{% static 'home/image/l.png' %}" alt="lecturer image" class="img-fluid" width="400">
                     <div class="caption">
-                        <h2>Dr. Jane Smith</h2>
-                        <p>Lead Researcher</p>
+                        <h2>Asihvini Govinda Pilay</h2>
+                        <p>Lecturer cum HOP at IICP | Bachelor in Information Technology | University Technology Petronas</p>
                         <!-- 折叠按钮 -->
                         <button class="btn btn-primary btn-sm mt-3" data-bs-toggle="collapse" data-bs-target="#supervisorInfo" aria-expanded="false" aria-controls="supervisorInfo">More Info</button>
                         <!-- 折叠内容 -->
                         <div id="supervisorInfo" class="collapse mt-3">
-                            <p>Dr. Jane Smith is an accomplished lead researcher with expertise in artificial intelligence and machine learning. She has published numerous papers and leads a dynamic research team.</p>
-                            <p>Contact Dr. Smith: jane@example.com</p>
+                            <p>Successfully done Bachelor in Information Technology and currently working as 
+                                Master Data Management at Infineon Technologies. Studied programming languages 
+                                such as C++, C#, Java, SQL and so on. Interested inn Software skills as well as 
+                                Hardware Skills. Eager to learn new things to improvise myself.</p>
+                            <p>Contact: <a href="https://linkedin.com/in/asihvini-govinda-pilay-aa2511172" target="_blank">linkedin.com/in/asihvini-govinda-pilay-aa2511172</a></p>
                         </div>
                     </div>
                 </div>
@@ -108,10 +110,10 @@
             <!-- 第一张图片和更多资料 -->
             <div class="col">
                 <div class="content">
-                    <img src="{% static 'home/image/专业-1.jpg' %}" alt="专业-1 image" class="img-fluid" width="400">
+                    <img src="{% static 'home/image/kf.png' %}" alt="kian foo image" class="img-fluid" width="400">
                     <div class="caption">
-                        <h2>John Doe</h2>
-                        <p>UI/UX Designer + Graphic Designer</p>
+                        <h2>Thien Kian Foo</h2>
+                        <p>Backend Programmer</p>
                         <!-- 折叠按钮 -->
                         <button class="btn btn-info btn-sm mt-3" data-bs-toggle="collapse" data-bs-target="#moreInfo1" aria-expanded="false" aria-controls="moreInfo1">More Info</button>
                         <!-- 折叠内容 -->
@@ -126,10 +128,10 @@
             <!-- 第二张图片和更多资料 -->
             <div class="col">
                 <div class="content">
-                    <img src="{% static 'home/image/专业-1.jpg' %}" alt="专业-1 image" class="img-fluid" width="400">
+                    <img src="{% static 'home/image/x.png' %}" alt="xing hong image" class="img-fluid" width="400">
                     <div class="caption">
-                        <h2>Prince Akashi</h2>
-                        <p>Photographer + Model</p>
+                        <h2>Ooi Xing Hong</h2>
+                        <p>Frontend Programmer</p>
                         <!-- 折叠按钮 -->
                         <button class="btn btn-info btn-sm mt-3" data-bs-toggle="collapse" data-bs-target="#moreInfo2" aria-expanded="false" aria-controls="moreInfo2">More Info</button>
                         <!-- 折叠内容 -->
@@ -144,10 +146,10 @@
             <!-- 第三张图片和更多资料 -->
             <div class="col">
                 <div class="content">
-                    <img src="{% static 'home/image/专业-1.jpg' %}" alt="专业-1 image" class="img-fluid" width="400">
+                    <img src="{% static 'home/image/w.png' %}" alt="wei teik image" class="img-fluid" width="400">
                     <div class="caption">
-                        <h2>Rafaella Mendes</h2>
-                        <p>Fashion Designer + Model</p>
+                        <h2>Lim Wei Teik</h2>
+                        <p>Frontend Programmer</p>
                         <!-- 折叠按钮 -->
                         <button class="btn btn-info btn-sm mt-3" data-bs-toggle="collapse" data-bs-target="#moreInfo3" aria-expanded="false" aria-controls="moreInfo3">More Info</button>
                         <!-- 折叠内容 -->
