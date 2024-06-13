@@ -8,8 +8,8 @@
 {% block content %}
 <style>
     .room_info a {
-    text-decoration: none;
-    color: black;
+        text-decoration: none;
+        color: black;
     }
 
     .room_info a:hover {
@@ -26,36 +26,39 @@
         text-decoration: none;
         color: black;
     }
+
     .room {
-    border: 1px solid #ccc; 
-    padding: 16px; 
-    margin: 16px; 
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    background-color: #f9f9f9; 
-    transition: transform 0.3s, box-shadow 0.3s; 
+        border: 1px solid #ccc;
+        padding: 16px;
+        margin: 16px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #f9f9f9;
+        transition: transform 0.3s, box-shadow 0.3s;
     }
 
     .room:hover {
-        transform: translateY(-10px); 
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
 </style>
 <link rel="stylesheet" href="{% static 'rooms/css/main.css' %}" type="text/css">
+
 <body>
-    <h1>Rooms</h1>
-    {# Check if got rooms #}
-    {% if rooms %}
+    <div class="container">
+        <h1 id="title" style= "margin: 0 auto">Rooms</h1>
+        {# Check if got rooms #}
+        {% if rooms %}
         <div class="rooms_container">
-        {# Iterate through rooms #}
-        {% for room in rooms %}
+            {# Iterate through rooms #}
+            {% for room in rooms %}
             <div class="room">
                 {# Check for rooms that are currently unavailable #}
                 {% if room.id in available_rooms %}
                 <a class="unavailable_rooms_link" href="{% url 'room' room.id %}">
                     <img src="{{ room.image.url }}">
-                        <h3>{{room.name}}</h3>
-                        <p>{{room.min_pax}} - {{room.max_pax}} Pax</p>
+                    <h3>{{room.name}}</h3>
+                    <p>{{room.min_pax}} - {{room.max_pax}} Pax</p>
                 </a>
                 {% else %}
                 <a class="unavailable_rooms_link" href="{% url 'room' room.id %}">
@@ -63,16 +66,16 @@
                     <h4>{{room.name}} : Currently Unavailable</h4>
                     <p>{{room.min_pax}} - {{room.max_pax}} Pax</p>
                 </a>
-            {% endif %}
+                {% endif %}
             </div>
-        {% endfor %}
+            {% endfor %}
         </div>
-    
-    {# If there is no room display message#}
-    {% else %}
+
+        {# If there is no room display message#}
+        {% else %}
         <p>No Room</p>
-    {% endif %}
-    
+        {% endif %}
+    </div>
 </body>
 
 {% endblock %}
