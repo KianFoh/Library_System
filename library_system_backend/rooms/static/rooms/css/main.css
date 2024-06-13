@@ -38,7 +38,6 @@
 
 div > .form-check {
     display: inline-block;
-<<<<<<< HEAD
     width: calc(20% - 20px); 20% width for each .form-check with margin
 
 } */
@@ -60,7 +59,4 @@ div > .form-check {
 }
 h1 {
     margin-left: 260px;
-=======
-    width: calc(20% - 20px); /* 20% width for each .form-check with margin */
->>>>>>> master
 }
