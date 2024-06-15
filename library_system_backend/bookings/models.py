@@ -76,7 +76,7 @@ class Booking(models.Model):
         user_emails = [booking_user.user.email for booking_user in booking_users]
 
         if self._all_booking_users_approved():
-            if self._timeslots_already_booked(timeslots, request, user_emails, booking_user):
+            if self._timeslots_validation(timeslots, request, user_emails, booking_user):
                 return redirect('bookings')
 
             for booking_user in booking_users:
@@ -96,12 +96,23 @@ class Booking(models.Model):
     def _any_booking_user_rejected(self):
         return self.bookinguser_set.filter(status='Rejected').exists()
 
-    def _timeslots_already_booked(self, timeslots, request, user_emails, booking_user):
+    def _timeslots_validation(self, timeslots, request, user_emails, booking_user):
         for timeslot in timeslots:
+            current_time = datetime.now().time()
             if timeslot.status == 'Booked':
                 self._notify_already_booked(request, timeslot, booking_user, user_emails)
                 return True
+            if current_time > timeslot.end_time.time():
+                self._notify_passed_currenttime(request, timeslot, booking_user, user_emails)
+                return True
         return False
+    
+    def _notify_passed_currenttime(self, request, timeslot, booking_user, user_emails):
+        room_name = timeslot.room.name
+        start_time = timeslot.start_time.strftime('%I:%M %p')
+        end_time = timeslot.end_time.strftime('%I:%M %p')
+        reason = f'the timeslot for {room_name} from {start_time} to {end_time} has already passed the current time.'
+        self._reject_booking_user(request, booking_user, reason, user_emails)
 
     def _notify_already_booked(self, request, timeslot, booking_user, user_emails):
         room_name = timeslot.room.name
