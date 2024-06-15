@@ -6,8 +6,9 @@ from django.conf import settings
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'library_system_backend.settings')
 
-app = Celery('bookings')
+app = Celery('library_system_backend')
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
+app.conf.timezone = 'Asia/Kuala_Lumpur'
 
-app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
+app.autodiscover_tasks()

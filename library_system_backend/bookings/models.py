@@ -2,12 +2,14 @@ from django.db import models
 from rooms.models import Room
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
-from datetime import datetime
 from user_data.models import User_data
 from django.contrib import messages
 from django.utils.safestring import mark_safe
 from django.shortcuts import redirect
 from django.core.mail import EmailMessage
+from datetime import datetime, timedelta
+from .tasks import send_booking_reminder
+from celery import shared_task
 
 class Timeslot(models.Model):
     TIMESLOT_STATUS_CHOICES = [
@@ -69,7 +71,7 @@ class Booking(models.Model):
     def update_status(self, request):
         current_user = request.user
         booking_user = self.bookinguser_set.filter(user=current_user).first()
-        timeslots = self.time_slot.all()
+        timeslots = self.time_slot.all().order_by('start_time')
         booking_users = self.bookinguser_set.all()
         user_emails = [booking_user.user.email for booking_user in booking_users]
 
@@ -161,8 +163,43 @@ class Booking(models.Model):
         )
 
         self.send_booking_email(request, subject, message, user_emails)
-        
 
+        # Variables to track heads of chains for timeslots
+        chain_heads = []
+
+        current_time = datetime.now().time()
+
+        previous_end_time = None
+        for timeslot in timeslots:
+            if previous_end_time and timeslot.start_time.time() != previous_end_time:
+                if current_time < timeslot.start_time.time():
+                    chain_heads.append(timeslot)
+            
+            # Update previous_end_time
+            previous_end_time = timeslot.end_time.time()
+
+        # Add the head of the first chain if it exists
+        if current_time < timeslots[0].start_time.time():
+            chain_heads.insert(0, timeslots[0])
+
+        for head in chain_heads:
+            start_time = head.start_time.time()  # Extract time component
+
+            # Calculate time difference
+            time_difference_seconds = (datetime.combine(datetime.today(), start_time) - datetime.combine(datetime.today(), current_time)).total_seconds()
+
+            # Calculate countdown time in seconds
+            if time_difference_seconds <= 15 * 60:  # 15 minutes in seconds
+                countdown_time = 1  # Send email ASAP
+            else:
+                countdown_time = time_difference_seconds - 15 * 60  # 15 minutes in seconds
+
+            # Schedule the reminder email
+            send_booking_reminder.apply_async(
+                args=[self.id, "Room Name", start_time, user_emails],
+                countdown=countdown_time
+            )
+            
     def _cancel_booking(self, request, booking_user, user_emails):
         username = request.user.username
         reason = f'{username} rejecting the request.'
