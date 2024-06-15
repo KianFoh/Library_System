@@ -27,7 +27,7 @@
     </p>
     <form method="post" action="{% url 'request_password_change' %}">
         {% csrf_token %}
-        <button type="submit" >Change Password</button>
+        <button type="submit" onclick="this.disabled=true; this.form.submit();">Change Password</button>
         <button id="edit-button">Edit Profile</button>
     </form>
     
@@ -46,14 +46,20 @@
 </div>
 
 <script>
-    document.getElementById('edit-button').addEventListener('click', function() {
-        document.getElementById('profile-view').style.display = 'none';
-        document.getElementById('profile-edit').style.display = 'block';
-    });
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle Edit Profile button click
+        document.getElementById('edit-button').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default behavior (form submission)
 
-    document.getElementById('cancel-button').addEventListener('click', function() {
-        document.getElementById('profile-view').style.display = 'block';
-        document.getElementById('profile-edit').style.display = 'none';
+            // Add logic to toggle between profile view and edit mode
+            document.getElementById('profile-view').style.display = 'none';
+            document.getElementById('profile-edit').style.display = 'block';
+        });
+        // Optional: If you have a Cancel button to revert profile changes
+        document.getElementById('cancel-button').addEventListener('click', function() {
+            document.getElementById('profile-view').style.display = 'block';
+            document.getElementById('profile-edit').style.display = 'none';
+        });
     });
 </script>
 {% endblock %}
