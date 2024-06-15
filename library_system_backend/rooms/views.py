@@ -90,16 +90,18 @@ def room(request, room_id):
         if request.method == 'POST':
             form = RoomForm(request.POST, min_users=room_data.min_pax, max_users=room_data.max_pax)
             form.fields['timeslots'].choices = timeslot_choices
-            if form.is_valid():
+
+            if not request.user.is_authenticated:
+                message_content = mark_safe('Please log in to your account before adding a booking.')
+                messages.warning(request, message_content) 
+
+            elif form.is_valid():
                 # Process form data
                 usernames = form.cleaned_data['usernames']
                 selected_timeslots_id = form.cleaned_data['timeslots']
                 num_timeslots = len(selected_timeslots_id)
-                
-                if not request.user.is_authenticated:
-                    message_content = mark_safe('Please log in to your account before adding a booking.')
-                    messages.warning(request, message_content)                    
-                elif not num_timeslots:
+                            
+                if not num_timeslots:
                     message_content = mark_safe('Please select a timeslot from the available options.')
                     messages.warning(request, message_content)
                 elif request.user.username not in usernames:

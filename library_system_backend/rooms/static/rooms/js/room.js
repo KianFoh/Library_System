@@ -20,6 +20,10 @@ function updateUsernameFields() {
             input.readOnly = true;
         }
 
+        if(!currentUsername){
+            input.readOnly = true;
+        }
+
         usernamesContainer.appendChild(label);
         usernamesContainer.appendChild(input);
         usernamesContainer.appendChild(document.createElement('br'));
