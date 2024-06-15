@@ -8,38 +8,43 @@
 
 {% block content %}
 <style>
-    .image-and-heading {
+    .room-image-container {
         display: flex;
+        flex-direction: column;
         align-items: center;
-        margin-left: 270px;
-        margin-top: 75px;
+        margin-top: 20px;
     }
 
-    .available-timeslot-heading {
-        margin-left: 700px;
+    .room-image {
+        max-width: 100%;
+        height: auto;
     }
+
     .booking-form {
-        margin-top: -40px;
-        margin-left: 25px;
-        width: 55%;
-        display: flex;
-        justify-content: center;
+        margin: 0 auto;
+        margin-top: -20px;
+        width: 70%;
+        position: relative;
+        left: 0;
+        right: 0;
     }
+
     .form-check-input {
         position: absolute;
         opacity: 0;
     }
+
     .form-check {
         background-color: #4D4AE8;
         background-image: linear-gradient(180deg, rgba(255, 255, 255, .15), rgba(255, 255, 255, 0));
         border: 1px solid #4D4AE8;
         border-radius: 1rem;
-        box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset,rgba(46, 54, 80, 0.075) 0 1px 1px;
+        box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset, rgba(46, 54, 80, 0.075) 0 1px 1px;
         box-sizing: border-box;
         color: #FFFFFF;
         cursor: pointer;
         display: inline-block;
-        font-family: Inter,sans-serif;
+        font-family: Inter, sans-serif;
         font-size: 1rem;
         font-weight: 500;
         line-height: 1.5;
@@ -47,7 +52,7 @@
         padding: .5rem 1rem;
         text-align: center;
         text-transform: none;
-        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
         user-select: none;
         -webkit-user-select: none;
         touch-action: manipulation;
@@ -97,6 +102,15 @@
         color: black;
     }
 
+    .form-check-container {
+        border: 1px solid gray;
+        border-radius: 1rem;
+        padding: 10px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
     .booking-button {
         align-items: center;
         background-color: rgba(240, 240, 240, 0.26);
@@ -110,6 +124,7 @@
         font-size: 18px;
         justify-content: center;
         line-height: 28px;
+        margin: 0 auto;
         max-width: 50%;
         padding: 14px 22px;
         text-decoration: none;
@@ -145,45 +160,51 @@
 </head>
 
 <body>
-    <div style="display: flex; align-items: center; margin-left: 260px;">
-        <a href="/rooms/" style="font-size: 40px; text-decoration: none; margin-top: -10px; color: #808080;">&lt;</a>
-        <h1 style="margin-left: 15px;">{{ room.name }}</h1>
+    <div class="container" style="display: flex; align-items: center; margin-top: -20px;">
+        <a href="/rooms/" style="font-size: 40px; text-decoration: none;  color: #808080;">&lt;</a>
+        <h1 id="title" class="my-4" style="margin-left: 10px;">{{ room.name }}</h1>
     </div>
-    <h1 class="available-timeslot-heading">Available TimeSlot</h1>
-    <div class="image-and-heading">
-        
-        <img src="{{ room.image.url }}" style="margin-top: -300px;">
-        
 
-        {% if form %}
-        <div class="booking-form">
-            <form method="post">
-                {% csrf_token %}
+    <div class="room-image-container">
+        <img src="{{ room.image.url }}" class="room-image">
+        <p>Room available: {{ room.min_pax }} - {{ room.max_pax }} Pax</p>
+    </div>
+    `
+
+    {% if form %}
+    <div class="booking-form">
+        <form method="post">
+            {% csrf_token %}
+            <h1 class="available-timeslot-heading">Available TimeSlot</h1>
+            <div class="form-check-container">
                 {{ form.timeslots|as_crispy_field }}
-                {{ form.number_of_users|as_crispy_field }}
-                <input type="hidden" id="current-username" value="{{ request.user.username }}">
-                <div id="usernames-container">
-                    <!-- Username fields will be appended here -->
-                </div>
-                {% if form.timeslots.errors %}
-                <div id="error_1_id_timeslots">{{ form.timeslots.errors }}</div>
-                {% endif %}
-                <button class="booking-button" type="submit" id="sub" onclick="this.disabled=true; this.form.submit();">Add to Booking</button>
-            </form>
-        </div>
-        {% else %}
-        <p>No available timeslots for booking.</p>
-        {% endif %}
+            </div>
+            {{ form.number_of_users|as_crispy_field }}
+            <input type="hidden" id="current-username" value="{{ request.user.username }}">
+            <div id="usernames-container">
+                <!-- Username fields will be appended here -->
+            </div>
+            {% if form.timeslots.errors %}
+            <div id="error_1_id_timeslots">{{ form.timeslots.errors }}</div>
+            {% endif %}
+            <button class="booking-button" type="submit" id="sub" onclick="this.disabled=true; this.form.submit();">Add
+                to Booking</button>
+        </form>
     </div>
+    {% else %}
+    <div class="container">
+        <p>No available timeslots for booking.</p>
+    </div>
+    {% endif %}
 
-    <p style="margin-left: 270px; margin-top: -190px;">Room available: {{ room.min_pax }} - {{ room.max_pax }} Pax</p>
+
 
 </body>
 
 
 <script>
-    document.querySelectorAll('.form-check-input').forEach(function(checkbox) {
-        checkbox.addEventListener('change', function() {
+    document.querySelectorAll('.form-check-input').forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
             if (this.checked) {
                 this.closest('.form-check').classList.add('checked');
             } else {
@@ -191,6 +212,6 @@
             }
         });
     });
-    </script>
-    
+</script>
+
 {% endblock content %}
