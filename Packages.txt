@@ -20,4 +20,4 @@ amqp == 5.2.0
 
 
 Start celery command: celery -A library_system_backend worker --loglevel=info  -P solo
-Start celery beat: celery -A myproject beat --loglevel=info
+Start celery beat: celery -A library_system_backend beat --loglevel=info
