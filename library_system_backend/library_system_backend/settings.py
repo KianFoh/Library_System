@@ -210,7 +210,7 @@ CELERY_BEAT_SCHEDULE = {
     },
     'reset_room_usage_hour_task': {
         'task': 'bookings.tasks.reset_room_usage_hour',
-        'schedule': schedule(10.0),  # Run every day at 8 AM
+        'schedule': crontab(hour=8, minute=0),  # Run every day at 8 AM
     },
 }
 

@@ -156,6 +156,7 @@ class Booking(models.Model):
             user_data = User_data.objects.get(user=booking_user.user)
             user_data.room_usage_hour += len(timeslots)
             user_data.save()
+            room_name = timeslots[0].room.name
 
         timeslots.update(status='Booked')
         self.status = 'Completed'
@@ -195,7 +196,7 @@ class Booking(models.Model):
 
         for head in chain_heads:
             start_time = head.start_time.time()  # Extract time component
-
+            
             # Calculate time difference
             time_difference_seconds = (datetime.combine(datetime.today(), start_time) - datetime.combine(datetime.today(), current_time)).total_seconds()
 
@@ -204,10 +205,9 @@ class Booking(models.Model):
                 countdown_time = 1  # Send email ASAP
             else:
                 countdown_time = time_difference_seconds - 15 * 60  # 15 minutes in seconds
-
             # Schedule the reminder email
             send_booking_reminder.apply_async(
-                args=[self.id, "Room Name", start_time, user_emails],
+                args=[self.id, room_name, start_time, user_emails],
                 countdown=countdown_time
             )
             

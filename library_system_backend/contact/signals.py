@@ -16,7 +16,7 @@ def send_email_on_contact_creation(sender, instance, created, **kwargs):
         sender_email = instance.user.email
 
         # Construct email subject and body
-        mail_subject = f'New Contact: {title}'
+        mail_subject = f'New Enquiry: {title}'
         mail_body = f'Message: {message}\n\nSender ID: {sender_id}\nSender Name: {sender_name}\nSender Email: {sender_email}'
 
         # Get all superusers
