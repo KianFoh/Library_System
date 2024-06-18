@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-<title>Contact</title>
+<title>Enquiry</title>
 
 {% endblock title %}
 
@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="{% static 'contact/css/main.css' %}" type="text/css">
 <div class="outer-form-container">
     <div class="form-container">
-        <h1>Contact Us</h1>
+        <h1>Enquiry</h1>
         <form method="post" action="{% url 'send_contact_email' %}">
             {% csrf_token %}
             {{ form|crispy }}
