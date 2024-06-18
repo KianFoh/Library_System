@@ -21,7 +21,6 @@ def reset_room_usage_hour():
         user.save()
     print('Completed')
 
-from django.utils.dateformat import format
 from django.utils import timezone
 
 @shared_task
@@ -38,7 +37,7 @@ def send_booking_reminder(booking_id, room_name, start_time, user_emails):
         username = user.username
 
         # Format start_time to 12-hour format with AM/PM
-        formatted_start_time = format(start_time, 'P T')
+        formatted_start_time = start_time.strftime("%I:%M %p")
 
         message = (
             f"Dear {username},\n\n"
