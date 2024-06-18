@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os 
 import pytz
+from celery.schedules import crontab, schedule
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -197,12 +198,19 @@ LOGOUT_REDIRECT_URL = '/'
 SOCIALACCOUNT_ADAPTER = 'authentication.adapter.MySocialAccountAdapter'
 
 # Celery Configuration
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
+
+CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'
+CELERY_RESULT_BACKEND = 'rpc://'  # Using RPC as the result backend
 
 CELERY_BEAT_SCHEDULE = {
-    'print_hello_task': {
-        'task': 'bookings.tasks.print_hello',  # Path to your task
-        'schedule': 10.0,  # Run every 10 seconds
+    'reset_timeslot': {
+        'task': 'bookings.tasks.reset_timeslots_status',
+        'schedule': crontab(hour=8, minute=0),  # Run every day at 8 AM
+    },
+    'reset_room_usage_hour_task': {
+        'task': 'bookings.tasks.reset_room_usage_hour',
+        'schedule': schedule(10.0),  # Run every day at 8 AM
     },
 }
+

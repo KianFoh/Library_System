@@ -15,8 +15,12 @@ function updateUsernameFields() {
         input.className = 'form-control';  // Apply Bootstrap styling
         input.required = true;
 
-        if (i === 1) {
+        if (i === 1 && currentUsername) {
             input.value = currentUsername; // Set the first field to the current user's username
+            input.readOnly = true;
+        }
+
+        if(!currentUsername){
             input.readOnly = true;
         }
 
