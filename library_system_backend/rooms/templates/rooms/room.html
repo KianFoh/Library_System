@@ -32,6 +32,7 @@
     .form-check-input {
         position: absolute;
         opacity: 0;
+        cursor: pointer;
     }
 
     .form-check {
@@ -203,8 +204,18 @@
 
 
 <script>
-    document.querySelectorAll('.form-check-input').forEach(function (checkbox) {
-        checkbox.addEventListener('change', function () {
+    document.querySelectorAll('.form-check').forEach(function(element) {
+        element.addEventListener('click', function(event) {
+            const checkbox = element.querySelector('.form-check-input');
+            if (checkbox) {
+                checkbox.checked = !checkbox.checked;
+                checkbox.dispatchEvent(new Event('change'));
+            }
+        });
+    });
+
+    document.querySelectorAll('.form-check-input').forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
             if (this.checked) {
                 this.closest('.form-check').classList.add('checked');
             } else {
