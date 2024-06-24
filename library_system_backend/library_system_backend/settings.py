@@ -36,6 +36,8 @@ ALLOWED_HOSTS = []
 SITE_ID = 1 
 
 INSTALLED_APPS = [
+    'admin_interface',
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -60,6 +62,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'django_celery_beat',
+
 ]
 SOCIALACCOUNT_LOGIN_ON_GET= True
 SOCIALACCOUNT_PROVIDERS = {
