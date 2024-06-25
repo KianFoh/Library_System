@@ -20,7 +20,7 @@ def send_email_on_contact_creation(sender, instance, created, **kwargs):
         mail_body = f'Message: {message}\n\nSender ID: {sender_id}\nSender Name: {sender_name}\nSender Email: {sender_email}'
 
         # Get all superusers
-        superusers = User.objects.filter(is_superuser=True)
+        superusers = User.objects.filter(is_staff=True)
 
         # Send email to each superuser
         for superuser in superusers:
